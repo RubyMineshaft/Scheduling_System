@@ -3,12 +3,12 @@ package model;
 public class FirstLevelDivision {
 
     private int id;
-    private int firstLevelDivisionName;
+    private int name;
     private int countryID;
 
-    public FirstLevelDivision(int id, int firstLevelDivisionName, int countryID) {
+    public FirstLevelDivision(int id, int name, int countryID) {
         this.id = id;
-        this.firstLevelDivisionName = firstLevelDivisionName;
+        this.name = name;
         this.countryID = countryID;
     }
 
@@ -20,12 +20,12 @@ public class FirstLevelDivision {
         this.id = id;
     }
 
-    public int getFirstLevelDivisionName() {
-        return firstLevelDivisionName;
+    public int getName() {
+        return name;
     }
 
-    public void setFirstLevelDivisionName(int firstLevelDivisionName) {
-        this.firstLevelDivisionName = firstLevelDivisionName;
+    public void setName(int name) {
+        this.name = name;
     }
 
     public int getCountryID() {
