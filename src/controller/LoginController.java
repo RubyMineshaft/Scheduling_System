@@ -23,6 +23,6 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         errorLbl.setText("");
-        zoneLbl.setText(zone.getDisplayName(TextStyle.FULL, Locale.getDefault()));
+        zoneLbl.setText(zone.getId());
     }
 }
