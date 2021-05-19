@@ -45,21 +45,21 @@
                         <Insets right="10.0" />
                      </padding>
                   </Label>
-                  <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets right="25.0" />
-                     </GridPane.margin>
-                  </PasswordField>
-                  <TextField GridPane.columnIndex="1">
+                  <TextField fx:id="userIDField" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets right="25.0" />
                      </GridPane.margin>
                   </TextField>
+                  <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="25.0" />
+                     </GridPane.margin>
+                  </PasswordField>
                </children>
             </GridPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0">
                <children>
-                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Submit" />
+                  <Button fx:id="submitBtn" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Submit" />
                </children>
                <VBox.margin>
                   <Insets right="25.0" />
