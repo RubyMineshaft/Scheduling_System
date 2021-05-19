@@ -13,12 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0">
          <children>
-            <Label alignment="CENTER" text="Log In">
+            <Label fx:id="loginLbl" alignment="CENTER" text="Log In">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
@@ -36,12 +35,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="User ID">
+                  <Label fx:id="userIDLbl" text="User ID">
                      <padding>
                         <Insets right="10.0" />
                      </padding>
                   </Label>
-                  <Label text="Password" GridPane.rowIndex="1">
+                  <Label fx:id="passwordLbl" text="Password" GridPane.rowIndex="1">
                      <padding>
                         <Insets right="10.0" />
                      </padding>
@@ -66,11 +65,11 @@
                   <Insets right="25.0" />
                </VBox.margin>
             </HBox>
-            <Label text="Label" />
+            <Label fx:id="errorLbl" text="Label" />
             <HBox alignment="BOTTOM_LEFT" prefHeight="40.0" prefWidth="200.0">
                <children>
-                  <Label text="Zone ID: " />
-                  <Label text="Label" />
+                  <Label fx:id="zoneIDLbl" text="Zone ID: " />
+                  <Label fx:id="zoneLbl" text="Label" />
                </children>
                <VBox.margin>
                   <Insets left="10.0" />
