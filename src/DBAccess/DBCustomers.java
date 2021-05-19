@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 public class DBCustomers {
 
-    /** Gets all customers from the database. 
+    /** Gets all customers from the database.
      * @return ObservableList of all customers
      */
     public static ObservableList<Customer> getAllCustomers() {
@@ -41,6 +41,24 @@ public class DBCustomers {
             throwables.printStackTrace();
         }
         return customerList;
+    }
+
+    public static void createCustomer(String name, String address, String postalCode, String phone, int divisionID) {
+        try{
+           String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?,?,?,?,?)";
+           PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+           ps.setString(1, name);
+           ps.setString(2, address);
+           ps.setString(3, postalCode);
+           ps.setString(4, phone);
+           ps.setInt(5, divisionID);
+
+           ps.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
 }
