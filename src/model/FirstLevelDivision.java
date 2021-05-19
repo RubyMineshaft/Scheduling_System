@@ -3,10 +3,10 @@ package model;
 public class FirstLevelDivision {
 
     private int id;
-    private int name;
+    private String name;
     private int countryID;
 
-    public FirstLevelDivision(int id, int name, int countryID) {
+    public FirstLevelDivision(int id, String name, int countryID) {
         this.id = id;
         this.name = name;
         this.countryID = countryID;
@@ -20,11 +20,11 @@ public class FirstLevelDivision {
         this.id = id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
