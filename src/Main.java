@@ -3,6 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import util.DBConnection;
 
 import java.util.*;
 
@@ -21,6 +22,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        DBConnection.startConnection();
         launch(args);
+        DBConnection.closeConnection();
     }
 }
