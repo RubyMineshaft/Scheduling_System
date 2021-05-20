@@ -48,7 +48,7 @@ public class CustomerForm implements Initializable {
     }
 
     @FXML
-    void saveAction(ActionEvent event) {
+    void onSave(ActionEvent event) {
         String name = nameTxt.getText();
         int divisionID = divisionBox.getSelectionModel().getSelectedItem().getId();
         String address = addressTxt.getText();
@@ -63,6 +63,13 @@ public class CustomerForm implements Initializable {
     void onCountryChosen(ActionEvent event) {
         Country chosenCountry = countryBox.getValue();
         divisionBox.setItems(DBFirstLevelDivisions.getFirstLevelDivisions(chosenCountry.getID()));
+        if (chosenCountry.getID() == 1){
+            addressTxt.setPromptText("123 ABC Street, White Plains");
+        } else if (chosenCountry.getID() == 2){
+            addressTxt.setPromptText("123 ABC Street, Greenwich, London");
+        } else {
+            addressTxt.setPromptText("123 ABC Street, Newmarket");
+        }
     }
 
     @Override
