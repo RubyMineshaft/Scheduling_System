@@ -3,6 +3,7 @@ package DBAccess;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Customer;
+import model.User;
 import util.DBConnection;
 
 import java.sql.PreparedStatement;
@@ -45,7 +46,7 @@ public class DBCustomers {
 
     public static void createCustomer(String name, String address, String postalCode, String phone, int divisionID) {
         try{
-           String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?,?,?,?,?)";
+           String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID, Created_By) VALUES (?,?,?,?,?,?)";
            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
            ps.setString(1, name);
@@ -53,12 +54,33 @@ public class DBCustomers {
            ps.setString(3, postalCode);
            ps.setString(4, phone);
            ps.setInt(5, divisionID);
+           ps.setString(6, User.getCurrentUser().getUsername());
 
            ps.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
 
+
+    //TODO: Preserve create date.
+    public static void updateCustomer(int id, String name, String address, String postalCode, String phone, int divisionID) {
+        try {
+            String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Division_ID = ?, Phone = ?, Last_Updated_By = ? WHERE Customer_ID = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ps.setString(1, name);
+            ps.setString(2, address);
+            ps.setString(3, postalCode);
+            ps.setInt(4, divisionID);
+            ps.setString(5, phone);
+            ps.setString(6, User.getCurrentUser().getUsername());
+            ps.setInt(7, id);
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
