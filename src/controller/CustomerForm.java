@@ -43,7 +43,7 @@ public class CustomerForm implements Initializable {
     private TextField phoneTxt;
 
     @FXML
-    void cancelAction(ActionEvent event) {
+    void onCancel(ActionEvent event) {
 
     }
 
