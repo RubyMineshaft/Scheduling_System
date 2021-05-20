@@ -38,7 +38,7 @@ public class User {
         currentUser = user;
     }
 
-    public static boolean authenticateUser(String username, String password){
+    public static boolean authenticate(String username, String password){
         User user = DBUsers.getUser(username);
         if (user != null && user.getPassword().equals(password)) {
             setCurrentUser(user);

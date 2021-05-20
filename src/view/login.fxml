@@ -45,12 +45,12 @@
                         <Insets right="10.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="userIDField" GridPane.columnIndex="1">
+                  <TextField fx:id="userIDField" onKeyPressed="#clearError" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets right="25.0" />
                      </GridPane.margin>
                   </TextField>
-                  <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <PasswordField fx:id="passwordField" onAction="#onSubmit" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets right="25.0" />
                      </GridPane.margin>
@@ -59,13 +59,13 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="submitBtn" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Submit" />
+                  <Button fx:id="submitBtn" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
                </children>
                <VBox.margin>
                   <Insets right="25.0" />
                </VBox.margin>
             </HBox>
-            <Label fx:id="errorLbl" text="Label" />
+            <Label fx:id="errorLbl" text="Label" textFill="#cd1c1c" />
             <HBox alignment="BOTTOM_LEFT" prefHeight="40.0" prefWidth="200.0">
                <children>
                   <Label fx:id="zoneIDLbl" text="Zone ID: " />
