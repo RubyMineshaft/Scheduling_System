@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentsController">
+   <children>
+      <SplitPane dividerPositions="0.22244488977955912" prefHeight="700.0" prefWidth="1000.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="562.0" prefWidth="220.0" spacing="20.0">
+                     <children>
+                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onManageCustomers" prefHeight="90.0" prefWidth="175.0" text="Manage Customers" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="15.0" right="15.0" />
+                           </padding>
+                        </Button>
+                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onManageContacts" prefHeight="90.0" prefWidth="176.0" text="Manage Contacts" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="50.0" right="50.0" />
+                           </padding>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#onReports" prefHeight="90.0" prefWidth="175.0" text="Reports" textAlignment="CENTER">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <Separator layoutY="562.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="220.0" />
+                  <VBox alignment="CENTER" layoutY="562.0" prefHeight="138.0" prefWidth="218.0">
+                     <children>
+                        <Label text="Signed in as:" />
+                        <Label text="Label">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#onLogOut" text="Log Out">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="700.0" prefWidth="773.0">
+                     <children>
+                        <Label text="Appointments">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TabPane prefHeight="30.0" prefWidth="733.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab onSelectionChanged="#onMonthSelected" text="Month" />
+                            <Tab onSelectionChanged="#onWeekSelected" text="Week" />
+                              <Tab onSelectionChanged="#onAllSelected" text="All Appointments">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
+                        <TableView prefHeight="513.0" prefWidth="733.0">
+                          <columns>
+                            <TableColumn prefWidth="37.11798095703125" text="ID" />
+                            <TableColumn prefWidth="85.19229125976562" text="Title" />
+                              <TableColumn prefWidth="128.80770874023438" text="Description" />
+                              <TableColumn prefWidth="112.2337646484375" text="Location" />
+                              <TableColumn prefWidth="91.7662353515625" text="Contact" />
+                              <TableColumn prefWidth="75.21002197265625" text="Type" />
+                              <TableColumn prefWidth="64.65380859375" text="Start Date &#10;and Time" />
+                              <TableColumn prefWidth="58.58282470703125" text="End Date &#10;and Time" />
+                              <TableColumn prefWidth="74.0" text="Customer ID" />
+                          </columns>
+                        </TableView>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                          <buttons>
+                            <Button mnemonicParsing="false" onAction="#onNewAppointment" text="New Appointment" />
+                              <Button mnemonicParsing="false" onAction="#onEditAppointment" text="Edit Appointment" />
+                              <Button mnemonicParsing="false" onAction="#onDeleteAppointment" text="Delete Appointment" />
+                          </buttons>
+                        </ButtonBar>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
