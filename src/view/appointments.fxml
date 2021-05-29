@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentsController">
    <children>
       <SplitPane dividerPositions="0.22244488977955912" prefHeight="700.0" prefWidth="1000.0">
@@ -50,7 +49,7 @@
                   <VBox alignment="CENTER" layoutY="562.0" prefHeight="138.0" prefWidth="218.0">
                      <children>
                         <Label text="Signed in as:" />
-                        <Label text="Label">
+                        <Label fx:id="userLabel" text="Label">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>

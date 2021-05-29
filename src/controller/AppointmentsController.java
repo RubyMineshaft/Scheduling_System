@@ -2,13 +2,23 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import model.User;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
+
+    Stage stage;
+    Parent scene;
 
     @FXML
     private Label userLabel;
@@ -29,8 +39,16 @@ public class AppointmentsController implements Initializable {
     }
 
     @FXML
-    void onLogOut(ActionEvent event) {
+    void onLogOut(ActionEvent event) throws IOException {
+        User.setCurrentUser(null);
+        System.out.println("Logged out.");
 
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.setTitle("Log In");
+        stage.centerOnScreen();
+        stage.show();
     }
 
     @FXML
@@ -65,6 +83,6 @@ public class AppointmentsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        
+        userLabel.setText(User.getCurrentUser().getUsername());
     }
 }
