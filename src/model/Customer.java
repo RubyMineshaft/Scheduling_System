@@ -8,14 +8,16 @@ public class Customer {
     private String postalCode;
     private String phone;
     private int divisionId;
+    private String division;
 
-    public Customer(int id, String name, String address, String postalCode, String phone, int divisionId) {
+    public Customer(int id, String name, String address, String postalCode, String phone, int divisionId, String division) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
         this.divisionId = divisionId;
+        this.division = division;
     }
 
     public int getId() {
@@ -64,5 +66,13 @@ public class Customer {
 
     public void setDivisionId(int divisionId) {
         this.divisionId = divisionId;
+    }
+
+    public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
     }
 }
