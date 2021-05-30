@@ -63,6 +63,21 @@ public class DBCustomers {
         }
     }
 
+    public static void deleteCustomer(int customerID){
+
+        //TODO: Delete Appointments for customer first!
+        try {
+            String sql = "DELETE FROM customers WHERE Customer_ID = ?";
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, customerID);
+
+            ps.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 
     //TODO: Preserve create date.
     public static void updateCustomer(int id, String name, String address, String postalCode, String phone, int divisionID) {

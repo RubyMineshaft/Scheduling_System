@@ -87,7 +87,7 @@
                           <buttons>
                             <Button mnemonicParsing="false" onAction="#onAddCustomer" text="New Customer" />
                               <Button mnemonicParsing="false" text="Edit Customer" />
-                              <Button mnemonicParsing="false" text="Delete Customer" />
+                              <Button mnemonicParsing="false" onAction="#onDeleteCustomer" text="Delete Customer" />
                           </buttons>
                         </ButtonBar>
                      </children>

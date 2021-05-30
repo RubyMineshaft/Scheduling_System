@@ -74,6 +74,14 @@ public class CustomersController implements Initializable {
     }
 
     @FXML
+    void onDeleteCustomer(ActionEvent event) {
+        //TODO: ask for confirmation
+        Customer customer = customersTableView.getSelectionModel().getSelectedItem();
+        DBCustomers.deleteCustomer(customer.getId());
+        customersTableView.getItems().remove(customer);
+    }
+
+    @FXML
     void onAddCustomer(ActionEvent event) throws IOException {
         loadScene(event, "customerForm");
     }
