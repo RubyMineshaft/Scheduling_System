@@ -52,8 +52,9 @@ public class CustomerForm implements Initializable {
     private TextField phoneTxt;
 
     @FXML
-    void onCancel(ActionEvent event) {
-
+    void onCancel(ActionEvent event) throws IOException {
+        //TODO: show confirmation prompt
+        showCustomers(event);
     }
 
     @FXML
@@ -66,6 +67,10 @@ public class CustomerForm implements Initializable {
 
         DBCustomers.createCustomer(name, address, postalCode, phone, divisionID);
 
+        showCustomers(event);
+    }
+
+    private void showCustomers(ActionEvent event) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/customers.fxml"));
         stage.setScene(new Scene(scene));
