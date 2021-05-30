@@ -48,4 +48,18 @@ public class DBAppointments {
         return appointments;
     }
 
+    public static void deleteAppointmentsForCustomer(int customerID) {
+        try {
+            String sql = "DELETE FROM appointments WHERE Customer_ID = ?";
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, customerID);
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

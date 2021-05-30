@@ -1,5 +1,6 @@
 package controller;
 
+import DBAccess.DBAppointments;
 import DBAccess.DBCustomers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,6 +78,7 @@ public class CustomersController implements Initializable {
     void onDeleteCustomer(ActionEvent event) {
         //TODO: ask for confirmation
         Customer customer = customersTableView.getSelectionModel().getSelectedItem();
+        DBAppointments.deleteAppointmentsForCustomer(customer.getId());
         DBCustomers.deleteCustomer(customer.getId());
         customersTableView.getItems().remove(customer);
     }
