@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,7 +25,7 @@ public class AppointmentsController implements Initializable {
     private Label userLabel;
 
     @FXML
-    void onAllSelected(ActionEvent event) {
+    void onAllSelected(Event event) {
 
     }
 
@@ -62,7 +63,7 @@ public class AppointmentsController implements Initializable {
     }
 
     @FXML
-    void onMonthSelected(ActionEvent event) {
+    void onMonthSelected(Event event) {
 
     }
 
@@ -77,7 +78,7 @@ public class AppointmentsController implements Initializable {
     }
 
     @FXML
-    void onWeekSelected(ActionEvent event) {
+    void onWeekSelected(Event event) {
 
     }
 
