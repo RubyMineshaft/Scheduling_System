@@ -43,6 +43,11 @@ public class CustomersController {
 
     }
 
+    @FXML
+    void onAddCustomer(ActionEvent event) throws IOException {
+        loadScene(event, "customerForm");
+    }
+
     private void loadScene(ActionEvent event, String view) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/" + view + ".fxml"));

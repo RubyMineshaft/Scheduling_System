@@ -85,7 +85,7 @@
                         </TableView>
                         <ButtonBar prefHeight="40.0" prefWidth="200.0">
                           <buttons>
-                            <Button mnemonicParsing="false" text="New Customer" />
+                            <Button mnemonicParsing="false" onAction="#onAddCustomer" text="New Customer" />
                               <Button mnemonicParsing="false" text="Edit Customer" />
                               <Button mnemonicParsing="false" text="Delete Customer" />
                           </buttons>
