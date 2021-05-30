@@ -5,18 +5,27 @@ import DBAccess.DBCustomers;
 import DBAccess.DBFirstLevelDivisions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.Country;
 import model.FirstLevelDivision;
 import util.DBConnection;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CustomerForm implements Initializable {
+
+    private Stage stage;
+    private Parent scene;
 
     @FXML
     private Label titleLbl;
@@ -48,7 +57,7 @@ public class CustomerForm implements Initializable {
     }
 
     @FXML
-    void onSave(ActionEvent event) {
+    void onSave(ActionEvent event) throws IOException {
         String name = nameTxt.getText();
         int divisionID = divisionBox.getSelectionModel().getSelectedItem().getId();
         String address = addressTxt.getText();
@@ -56,7 +65,12 @@ public class CustomerForm implements Initializable {
         String phone = phoneTxt.getText();
 
         DBCustomers.createCustomer(name, address, postalCode, phone, divisionID);
-        //TODO: Return to previous screen.
+
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/customers.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.centerOnScreen();
+        stage.show();
     }
 
     @FXML
