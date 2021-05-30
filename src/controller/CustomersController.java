@@ -76,23 +76,32 @@ public class CustomersController implements Initializable {
     void onDeleteCustomer(ActionEvent event) {
         Customer customer = customersTableView.getSelectionModel().getSelectedItem();
 
-        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmation.setTitle("Confirm Delete");
-        confirmation.setHeaderText("Delete Customer");
-        confirmation.setContentText("Customer #" + customer.getId() + "(" + customer.getName() + ") and all associated appointments will be deleted. Do you wish to continue?");
+        if (customer == null) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Delete Customer");
+            error.setHeaderText("Selection Error");
+            error.setContentText("You must choose a customer to delete.");
 
-        Optional<ButtonType> result = confirmation.showAndWait();
+            error.showAndWait();
+        } else {
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmation.setTitle("Confirm Delete");
+            confirmation.setHeaderText("Delete Customer");
+            confirmation.setContentText("Customer #" + customer.getId() + "(" + customer.getName() + ") and all associated appointments will be deleted. Do you wish to continue?");
 
-        if (result.get() == ButtonType.OK) {
-            DBAppointments.deleteAppointmentsForCustomer(customer.getId());
-            DBCustomers.deleteCustomer(customer.getId());
-            customersTableView.getItems().remove(customer);
+            Optional<ButtonType> result = confirmation.showAndWait();
 
-            Alert deleted = new Alert(Alert.AlertType.INFORMATION);
-            deleted.setTitle("Customer Deleted");
-            deleted.setHeaderText("Customer Deleted");
-            deleted.setContentText("Customer #" + customer.getId() + "(" + customer.getName() + ") has been deleted.");
-            deleted.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                DBAppointments.deleteAppointmentsForCustomer(customer.getId());
+                DBCustomers.deleteCustomer(customer.getId());
+                customersTableView.getItems().remove(customer);
+
+                Alert deleted = new Alert(Alert.AlertType.INFORMATION);
+                deleted.setTitle("Customer Deleted");
+                deleted.setHeaderText("Customer Deleted");
+                deleted.setContentText("Customer #" + customer.getId() + "(" + customer.getName() + ") has been deleted.");
+                deleted.showAndWait();
+            }
         }
     }
 
@@ -107,7 +116,7 @@ public class CustomersController implements Initializable {
         loader.setLocation(getClass().getResource("/view/customerForm.fxml"));
         loader.load();
 
-        CustomerForm controller = loader.getController();
+        CustomerFormController controller = loader.getController();
 
         Customer selectedCustomer = customersTableView.getSelectionModel().getSelectedItem();
         if (selectedCustomer == null) {

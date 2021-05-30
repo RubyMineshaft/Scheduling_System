@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CustomerForm implements Initializable {
+public class CustomerFormController implements Initializable {
 
     private Stage stage;
     private Parent scene;
@@ -108,6 +108,7 @@ public class CustomerForm implements Initializable {
         phoneTxt.setText(customer.getPhone());
 
         titleLbl.setText("Edit Customer");
+        saveBtn.setText("Update");
         saveBtn.setOnAction(event -> {
             try {
                 updateCustomer(event);
