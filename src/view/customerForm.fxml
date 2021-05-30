@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerForm">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerForm">
    <children>
       <VBox AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -59,7 +59,7 @@
             </GridPane>
             <ButtonBar prefHeight="40.0" prefWidth="200.0">
               <buttons>
-                <Button mnemonicParsing="false" onAction="#onSave" text="Save" />
+                <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#onSave" text="Save" />
                   <Button mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
               </buttons>
             </ButtonBar>

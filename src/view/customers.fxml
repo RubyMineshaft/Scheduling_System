@@ -86,7 +86,7 @@
                         <ButtonBar prefHeight="40.0" prefWidth="200.0">
                           <buttons>
                             <Button mnemonicParsing="false" onAction="#onAddCustomer" text="New Customer" />
-                              <Button mnemonicParsing="false" text="Edit Customer" />
+                              <Button mnemonicParsing="false" onAction="#onEditCustomer" text="Edit Customer" />
                               <Button mnemonicParsing="false" onAction="#onDeleteCustomer" text="Delete Customer" />
                           </buttons>
                         </ButtonBar>

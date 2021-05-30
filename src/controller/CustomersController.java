@@ -101,6 +101,33 @@ public class CustomersController implements Initializable {
         loadScene(event, "customerForm");
     }
 
+    @FXML
+    void onEditCustomer(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/customerForm.fxml"));
+        loader.load();
+
+        CustomerForm controller = loader.getController();
+
+        Customer selectedCustomer = customersTableView.getSelectionModel().getSelectedItem();
+        if (selectedCustomer == null) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Edit Customer");
+            error.setHeaderText("Selection Error");
+            error.setContentText("You must choose a customer to edit.");
+
+            error.showAndWait();
+        } else {
+            controller.editCustomer(selectedCustomer);
+
+            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.centerOnScreen();
+            stage.show();
+        }
+    }
+
     private void loadScene(ActionEvent event, String view) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/" + view + ".fxml"));

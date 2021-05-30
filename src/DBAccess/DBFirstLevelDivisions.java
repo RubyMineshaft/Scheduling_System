@@ -44,4 +44,26 @@ public class DBFirstLevelDivisions {
         return divisionList;
     }
 
+    public static FirstLevelDivision getDivision(int id) {
+        FirstLevelDivision division = null;
+
+        try {
+            String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = ?";
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            String name = rs.getString("Division");
+            int countryID = rs.getInt("COUNTRY_ID");
+
+                division = new FirstLevelDivision(id, name, countryID);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return division;
+    }
+
 }

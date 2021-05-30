@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Country;
+import model.Customer;
 import model.FirstLevelDivision;
 import util.DBConnection;
 
@@ -26,6 +27,9 @@ public class CustomerForm implements Initializable {
 
     private Stage stage;
     private Parent scene;
+
+    @FXML
+    private Button saveBtn;
 
     @FXML
     private Label titleLbl;
@@ -89,6 +93,42 @@ public class CustomerForm implements Initializable {
         } else {
             addressTxt.setPromptText("123 ABC Street, Newmarket");
         }
+    }
+
+    public void editCustomer(Customer customer) {
+        FirstLevelDivision division = DBFirstLevelDivisions.getDivision(customer.getDivisionId());
+        Country country = DBCountries.getCountry(division.getCountryID());
+
+        idTxt.setText(String.valueOf(customer.getId()));
+        nameTxt.setText(customer.getName());
+        countryBox.getSelectionModel().select(country);
+        divisionBox.getSelectionModel().select(division);
+        addressTxt.setText(customer.getAddress());
+        postalTxt.setText(customer.getPostalCode());
+        phoneTxt.setText(customer.getPhone());
+
+        titleLbl.setText("Edit Customer");
+        saveBtn.setOnAction(event -> {
+            try {
+                updateCustomer(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @FXML
+    void updateCustomer(ActionEvent event) throws IOException {
+        int id = Integer.parseInt(idTxt.getText());
+        String name = nameTxt.getText();
+        int divisionID = divisionBox.getSelectionModel().getSelectedItem().getId();
+        String address = addressTxt.getText();
+        String postalCode = postalTxt.getText();
+        String phone = phoneTxt.getText();
+
+        DBCustomers.updateCustomer(id, name, address, postalCode, phone, divisionID);
+
+        showCustomers(event);
     }
 
     @Override

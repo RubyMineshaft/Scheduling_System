@@ -41,4 +41,25 @@ public class DBCountries {
         return countryList;
     }
 
+    public static Country getCountry(int id) {
+        Country country = null;
+
+        try{
+            String sql = "SELECT * FROM countries WHERE Country_ID = ?";
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            String name =  rs.getString("Country");
+
+            country = new Country(id, name);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return country;
+    }
+
 }
