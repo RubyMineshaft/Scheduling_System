@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
@@ -19,6 +16,7 @@ import model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CustomersController implements Initializable {
@@ -76,11 +74,26 @@ public class CustomersController implements Initializable {
 
     @FXML
     void onDeleteCustomer(ActionEvent event) {
-        //TODO: ask for confirmation
         Customer customer = customersTableView.getSelectionModel().getSelectedItem();
-        DBAppointments.deleteAppointmentsForCustomer(customer.getId());
-        DBCustomers.deleteCustomer(customer.getId());
-        customersTableView.getItems().remove(customer);
+
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Confirm Delete");
+        confirmation.setHeaderText("Delete Customer");
+        confirmation.setContentText("Customer #" + customer.getId() + "(" + customer.getName() + ") and all associated appointments will be deleted. Do you wish to continue?");
+
+        Optional<ButtonType> result = confirmation.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            DBAppointments.deleteAppointmentsForCustomer(customer.getId());
+            DBCustomers.deleteCustomer(customer.getId());
+            customersTableView.getItems().remove(customer);
+
+            Alert deleted = new Alert(Alert.AlertType.INFORMATION);
+            deleted.setTitle("Customer Deleted");
+            deleted.setHeaderText("Customer Deleted");
+            deleted.setContentText("Customer #" + customer.getId() + "(" + customer.getName() + ") has been deleted.");
+            deleted.showAndWait();
+        }
     }
 
     @FXML
