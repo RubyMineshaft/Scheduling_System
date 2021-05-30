@@ -44,12 +44,7 @@ public class AppointmentsController implements Initializable {
         User.setCurrentUser(null);
         System.out.println("Logged out.");
 
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.setTitle("Log In");
-        stage.centerOnScreen();
-        stage.show();
+        loadScene(event, "login");
     }
 
     @FXML
@@ -58,8 +53,8 @@ public class AppointmentsController implements Initializable {
     }
 
     @FXML
-    void onManageCustomers(ActionEvent event) {
-
+    void onManageCustomers(ActionEvent event) throws IOException {
+        loadScene(event, "customers");
     }
 
     @FXML
@@ -80,6 +75,14 @@ public class AppointmentsController implements Initializable {
     @FXML
     void onWeekSelected(Event event) {
 
+    }
+
+    private void loadScene(ActionEvent event, String view) throws IOException {
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/" + view + ".fxml"));
+        stage.setScene(new Scene(scene));
+        stage.centerOnScreen();
+        stage.show();
     }
 
     @Override
