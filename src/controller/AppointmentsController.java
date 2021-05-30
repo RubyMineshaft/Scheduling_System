@@ -125,9 +125,7 @@ public class AppointmentsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userLabel.setText(User.getCurrentUser().getUsername());
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
-
+        
         appointmentTableView.setItems(DBAppointments.getAllAppointments());
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
