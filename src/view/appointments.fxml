@@ -94,8 +94,8 @@
                               <TableColumn prefWidth="112.2337646484375" text="Location" />
                               <TableColumn prefWidth="91.7662353515625" text="Contact" />
                               <TableColumn prefWidth="75.21002197265625" text="Type" />
-                              <TableColumn prefWidth="64.65380859375" text="Start Date &#10;and Time" />
-                              <TableColumn prefWidth="58.58282470703125" text="End Date &#10;and Time" />
+                              <TableColumn prefWidth="64.65380859375" text="Start" />
+                              <TableColumn prefWidth="58.58282470703125" text="End" />
                               <TableColumn prefWidth="74.0" text="Customer ID" />
                           </columns>
                         </TableView>
