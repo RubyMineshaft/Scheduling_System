@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Appointment {
 
     private int id, customerID, contactID;
-    private String title, description, location, type, contactName;
+    private String title, description, location, type, contactName, customerName;
     private LocalDateTime start, end, createDate;
 
     public int getId() {
@@ -52,7 +52,11 @@ public class Appointment {
         return contactName;
     }
 
-    public Appointment(int id, int customerID, int contactID, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, LocalDateTime createDate, String contactName) {
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public Appointment(int id, int customerID, int contactID, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, LocalDateTime createDate, String contactName, String customerName) {
         this.id = id;
         this.customerID = customerID;
         this.contactID = contactID;
@@ -64,5 +68,6 @@ public class Appointment {
         this.end = end;
         this.createDate = createDate;
         this.contactName = contactName;
+        this.customerName = customerName;
     }
 }

@@ -16,7 +16,7 @@ public class DBAppointments {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT a.*, c.Contact_Name FROM appointments a LEFT JOIN contacts c ON a.Contact_ID = c.Contact_ID";
+            String sql = "SELECT a.*, c.Contact_Name, x.Customer_Name FROM appointments a JOIN contacts c ON a.Contact_ID = c.Contact_ID JOIN customers x ON a.Customer_ID = x.Customer_ID";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
             ResultSet rs = ps.executeQuery();
@@ -34,8 +34,9 @@ public class DBAppointments {
                 int userID = rs.getInt("User_ID");
                 int contactID = rs.getInt("Contact_ID");
                 String contactName = rs.getString("Contact_Name");
+                String customerName = rs.getString("Customer_Name");
 
-                Appointment appointment = new Appointment(id, customerID, contactID, title, description, location, type, start, end, created, contactName);
+                Appointment appointment = new Appointment(id, customerID, contactID, title, description, location, type, start, end, created, contactName, customerName);
 
                 appointments.add(appointment);
             }

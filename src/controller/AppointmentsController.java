@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
@@ -20,6 +17,7 @@ import model.User;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
@@ -59,6 +57,9 @@ public class AppointmentsController implements Initializable {
 
     @FXML
     private TableColumn<Appointment, Integer> custIDCol;
+
+    @FXML
+    private TableColumn<Appointment, String> customerNameCol;
 
     @FXML
     void onAllSelected(Event event) {
@@ -125,6 +126,8 @@ public class AppointmentsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userLabel.setText(User.getCurrentUser().getUsername());
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
+
         appointmentTableView.setItems(DBAppointments.getAllAppointments());
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -135,5 +138,6 @@ public class AppointmentsController implements Initializable {
         startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
         custIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
     }
 }

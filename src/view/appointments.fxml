@@ -97,6 +97,7 @@
                               <TableColumn fx:id="startCol" prefWidth="64.65380859375" text="Start" />
                               <TableColumn fx:id="endCol" prefWidth="58.58282470703125" text="End" />
                               <TableColumn fx:id="custIDCol" prefWidth="74.0" text="Customer ID" />
+                              <TableColumn fx:id="customerNameCol" prefWidth="75.0" text="Customer Name" />
                           </columns>
                         </TableView>
                         <ButtonBar prefHeight="40.0" prefWidth="200.0">
