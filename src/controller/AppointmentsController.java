@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
@@ -68,7 +69,25 @@ public class AppointmentsController implements Initializable {
 
     @FXML
     void onDeleteAppointment(ActionEvent event) {
+        Appointment appointment = appointmentTableView.getSelectionModel().getSelectedItem();
 
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Confirm Delete");
+        confirmation.setHeaderText("Delete appointment");
+        confirmation.setContentText("Appointment #" + appointment.getId() + " will be deleted. Do you wish to continue?");
+
+        Optional<ButtonType> result = confirmation.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            DBAppointments.deleteAppointment(appointment.getId());
+            appointmentTableView.getItems().remove(appointment);
+
+            Alert deleted = new Alert(Alert.AlertType.INFORMATION);
+            deleted.setTitle("Customer Deleted");
+            deleted.setHeaderText("Customer Deleted");
+            deleted.setContentText("Appointment #" + appointment.getId() + " has been deleted.");
+            deleted.showAndWait();
+        }
     }
 
     @FXML
