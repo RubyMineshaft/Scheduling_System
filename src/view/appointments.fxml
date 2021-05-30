@@ -86,17 +86,17 @@
                               </Tab>
                           </tabs>
                         </TabPane>
-                        <TableView prefHeight="513.0" prefWidth="733.0">
+                        <TableView fx:id="appointmentTableView" prefHeight="513.0" prefWidth="733.0">
                           <columns>
-                            <TableColumn prefWidth="37.11798095703125" text="ID" />
-                            <TableColumn prefWidth="85.19229125976562" text="Title" />
-                              <TableColumn prefWidth="128.80770874023438" text="Description" />
-                              <TableColumn prefWidth="112.2337646484375" text="Location" />
-                              <TableColumn prefWidth="91.7662353515625" text="Contact" />
-                              <TableColumn prefWidth="75.21002197265625" text="Type" />
-                              <TableColumn prefWidth="64.65380859375" text="Start" />
-                              <TableColumn prefWidth="58.58282470703125" text="End" />
-                              <TableColumn prefWidth="74.0" text="Customer ID" />
+                            <TableColumn fx:id="idCol" prefWidth="37.11798095703125" text="ID" />
+                            <TableColumn fx:id="titleCol" prefWidth="85.19229125976562" text="Title" />
+                              <TableColumn fx:id="descCol" prefWidth="128.80770874023438" text="Description" />
+                              <TableColumn fx:id="locationCol" prefWidth="112.2337646484375" text="Location" />
+                              <TableColumn fx:id="contactCol" prefWidth="91.7662353515625" text="Contact" />
+                              <TableColumn fx:id="typeCol" prefWidth="75.21002197265625" text="Type" />
+                              <TableColumn fx:id="startCol" prefWidth="64.65380859375" text="Start" />
+                              <TableColumn fx:id="endCol" prefWidth="58.58282470703125" text="End" />
+                              <TableColumn fx:id="custIDCol" prefWidth="74.0" text="Customer ID" />
                           </columns>
                         </TableView>
                         <ButtonBar prefHeight="40.0" prefWidth="200.0">

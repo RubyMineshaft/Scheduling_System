@@ -1,5 +1,6 @@
 package controller;
 
+import DBAccess.DBAppointments;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -9,11 +10,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Appointment;
 import model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
@@ -23,6 +29,36 @@ public class AppointmentsController implements Initializable {
 
     @FXML
     private Label userLabel;
+
+    @FXML
+    private TableView<Appointment> appointmentTableView;
+
+    @FXML
+    private TableColumn<Appointment, Integer> idCol;
+
+    @FXML
+    private TableColumn<Appointment, String> titleCol;
+
+    @FXML
+    private TableColumn<Appointment, String> descCol;
+
+    @FXML
+    private TableColumn<Appointment, String> locationCol;
+
+    @FXML
+    private TableColumn<Appointment, String> contactCol;
+
+    @FXML
+    private TableColumn<Appointment, String> typeCol;
+
+    @FXML
+    private TableColumn<Appointment, LocalDateTime> startCol;
+
+    @FXML
+    private TableColumn<Appointment, LocalDateTime> endCol;
+
+    @FXML
+    private TableColumn<Appointment, Integer> custIDCol;
 
     @FXML
     void onAllSelected(Event event) {
@@ -88,5 +124,16 @@ public class AppointmentsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userLabel.setText(User.getCurrentUser().getUsername());
+
+        appointmentTableView.setItems(DBAppointments.getAllAppointments());
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        contactCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        custIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
     }
 }

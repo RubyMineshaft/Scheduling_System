@@ -48,6 +48,10 @@ public class Appointment {
         return createDate;
     }
 
+    public String getContactName() {
+        return contactName;
+    }
+
     public Appointment(int id, int customerID, int contactID, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, LocalDateTime createDate, String contactName) {
         this.id = id;
         this.customerID = customerID;
