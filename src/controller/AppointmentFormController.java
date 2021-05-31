@@ -19,9 +19,7 @@ import model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.ResourceBundle;
 
 public class AppointmentFormController implements Initializable {
@@ -118,17 +116,45 @@ public class AppointmentFormController implements Initializable {
     }
 
     private boolean isWithinBusinessHours(LocalDateTime start, LocalDateTime end) {
+        ZoneId est = ZoneId.of("America/New_York");
+        ZonedDateTime estStart = ZonedDateTime.of(2021,1,1,8,0,0,0,est);
+        ZonedDateTime estEnd = ZonedDateTime.of(2021,1,1, 22, 0,0,0,est);
+        LocalTime businessStart = estStart.withZoneSameInstant(ZoneId.systemDefault()).toLocalTime();
+        LocalTime businessEnd = estEnd.withZoneSameInstant(ZoneId.systemDefault()).toLocalTime();
 
+        if (start.toLocalTime().isBefore(businessStart)) {
+            String contentText = "Start time is not within business hours. All appointments must be between 08:00 and 22:00 EST. ";
+            if (!ZoneId.systemDefault().getId().equals("America/New_York")){
+                contentText = contentText + "(" + businessStart + " and " + businessEnd + " local time)";
+            }
+            contentText = contentText + "\n\nPlease choose a different start time.";
+
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Outside of Business Hours");
+            error.setHeaderText("Outside of Business Hours");
+            error.setContentText(contentText);
+            error.showAndWait();
+            return false;
+        } else if (end.toLocalTime().isAfter(businessEnd)) {
+            String contentText = "End time is not within business hours. All appointments must be between 08:00 and 22:00 EST.";
+            if (!ZoneId.systemDefault().getId().equals("America/New_York")) {
+                contentText = contentText + " (" + businessStart + " and " + businessEnd + " local time)";
+            }
+            contentText = contentText + "\n\nPlease choose a different end time.";
+
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Outside of Business Hours");
+            error.setHeaderText("Outside of Business Hours");
+            error.setContentText(contentText);
+            error.showAndWait();
+            return false;
+        }
         return true;
     }
 
-
     private void populateTimes(){
-
         LocalTime start = LocalTime.of(5,0);
-        LocalTime end = LocalTime.of(22,0,1);
-
-
+        LocalTime end = LocalTime.of(23,0,1);
 
         while (start.isBefore(end)) {
             startTime.getItems().add(start);
@@ -139,8 +165,6 @@ public class AppointmentFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
         customerComboBox.setItems(DBCustomers.getAllCustomers());
         contactComboBox.setItems(DBContacts.getAllContacts());
         populateTimes();
