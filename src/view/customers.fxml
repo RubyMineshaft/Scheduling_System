@@ -28,12 +28,12 @@
                                         <Insets left="15.0" right="15.0" />
                                     </padding>
                                 </Button>
-                                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onManageContacts" prefHeight="90.0" prefWidth="176.0" text="Manage Contacts" textAlignment="CENTER" wrapText="true">
+                                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="176.0" styleClass="active-view" text="Manage Customers" textAlignment="CENTER" wrapText="true">
                                     <font>
                                         <Font size="18.0" />
                                     </font>
                                     <padding>
-                                        <Insets left="50.0" right="50.0" />
+                                        <Insets left="45.0" right="45.0" />
                                     </padding>
                                 </Button>
                                 <Button mnemonicParsing="false" onAction="#onReports" prefHeight="90.0" prefWidth="175.0" text="Reports" textAlignment="CENTER">

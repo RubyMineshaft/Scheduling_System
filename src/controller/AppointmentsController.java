@@ -125,12 +125,7 @@ public class AppointmentsController implements Initializable {
 
         loadScene(event, "login");
     }
-
-    @FXML
-    void onManageContacts(ActionEvent event) {
-
-    }
-
+    
     @FXML
     void onManageCustomers(ActionEvent event) throws IOException {
         loadScene(event, "customers");

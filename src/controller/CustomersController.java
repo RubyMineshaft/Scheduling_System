@@ -48,7 +48,6 @@ public class CustomersController implements Initializable {
     @FXML
     private TableColumn<Customer, String> divisionCol;
 
-
     @FXML
     void onLogOut(ActionEvent event) throws IOException {
         User.setCurrentUser(null);
@@ -60,11 +59,6 @@ public class CustomersController implements Initializable {
     @FXML
     void onManageAppointments(ActionEvent event) throws IOException {
         loadScene(event, "appointments");
-    }
-
-    @FXML
-    void onManageContacts(ActionEvent event) throws IOException {
-        loadScene(event, "contacts");
     }
 
     @FXML
