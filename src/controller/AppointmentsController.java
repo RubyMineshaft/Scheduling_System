@@ -72,22 +72,32 @@ public class AppointmentsController implements Initializable {
     void onDeleteAppointment(ActionEvent event) {
         Appointment appointment = appointmentTableView.getSelectionModel().getSelectedItem();
 
-        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmation.setTitle("Confirm Delete");
-        confirmation.setHeaderText("Delete appointment");
-        confirmation.setContentText("Appointment #" + appointment.getId() + " will be deleted. Do you wish to continue?");
+        if (appointment == null) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Delete Appointment");
+            error.setHeaderText("Selection Error");
+            error.setContentText("You must choose an appointment to delete.");
 
-        Optional<ButtonType> result = confirmation.showAndWait();
+            error.showAndWait();
+        } else {
 
-        if (result.get() == ButtonType.OK) {
-            DBAppointments.deleteAppointment(appointment.getId());
-            appointmentTableView.getItems().remove(appointment);
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmation.setTitle("Confirm Delete");
+            confirmation.setHeaderText("Delete appointment");
+            confirmation.setContentText("Appointment #" + appointment.getId() + " will be deleted. Do you wish to continue?");
 
-            Alert deleted = new Alert(Alert.AlertType.INFORMATION);
-            deleted.setTitle("Customer Deleted");
-            deleted.setHeaderText("Customer Deleted");
-            deleted.setContentText("Appointment #" + appointment.getId() + " has been deleted.");
-            deleted.showAndWait();
+            Optional<ButtonType> result = confirmation.showAndWait();
+
+            if (result.get() == ButtonType.OK) {
+                DBAppointments.deleteAppointment(appointment.getId());
+                appointmentTableView.getItems().remove(appointment);
+
+                Alert deleted = new Alert(Alert.AlertType.INFORMATION);
+                deleted.setTitle("Appointment Deleted");
+                deleted.setHeaderText("Appointment Deleted");
+                deleted.setContentText("Appointment #" + appointment.getId() + " has been deleted.");
+                deleted.showAndWait();
+            }
         }
     }
 
@@ -125,7 +135,7 @@ public class AppointmentsController implements Initializable {
 
         loadScene(event, "login");
     }
-    
+
     @FXML
     void onManageCustomers(ActionEvent event) throws IOException {
         loadScene(event, "customers");
