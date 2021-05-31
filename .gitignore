@@ -63,3 +63,4 @@ crashlytics-build.properties
 
 # Created by .ignore support plugin (hsz.mobi)
 /src/util/DBPassword.java
+/src/login_activity.txt 
