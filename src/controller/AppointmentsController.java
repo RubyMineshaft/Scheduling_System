@@ -119,8 +119,8 @@ public class AppointmentsController implements Initializable {
     }
 
     @FXML
-    void onNewAppointment(ActionEvent event) {
-
+    void onNewAppointment(ActionEvent event) throws IOException {
+        loadScene(event, "appointmentForm");
     }
 
     @FXML
