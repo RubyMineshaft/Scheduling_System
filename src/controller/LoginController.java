@@ -54,6 +54,7 @@ public class LoginController implements Initializable {
         if (User.authenticate(username, password)) {
             log.println(LocalDateTime.now().format(formatter) + " -- Successful login by " + username);
             showAppointments(event);
+            checkUpcomingAppointments();
         } else {
             log.println(LocalDateTime.now().format(formatter) + " -- Failed login by " + username);
             userIDField.setText("");
@@ -72,7 +73,20 @@ public class LoginController implements Initializable {
         stage.show();
     }
 
-    @FXML
+    private void checkUpcomingAppointments() {
+        ObservableList<Appointment> appointments = DBAppointments.getUpcomingAppointmentsForUser(User.getCurrentUser().getId());
+        if (appointments.size() > 0) {
+            Appointment appointment = appointments.get(0);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Upcoming Appointment");
+            alert.setHeaderText("Appointment within 15 minutes");
+            alert.setContentText("Appointment " + appointment.getId() + " is starting at " + appointment.getStart().toLocalDate() + " " + appointment.getStart().toLocalTime());
+            alert.showAndWait();
+        }
+    }
+
+        @FXML
     void clearError(KeyEvent event) {
         errorLbl.setText("");
     }
