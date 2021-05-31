@@ -90,7 +90,7 @@ public class AppointmentFormController implements Initializable {
         int customerID = customerComboBox.getSelectionModel().getSelectedItem().getId();
         int contactID = contactComboBox.getSelectionModel().getSelectedItem().getId();
 
-        if (!hasConflictingAppointment(customerID, start, end) && isWithinBusinessHours(start, end)) {
+        if (!hasConflictingAppointment(customerID, start, end, 0) && isWithinBusinessHours(start, end)) {
             DBAppointments.createAppointment(title, description, location, type, start, end, customerID, contactID);
 
             showAppointments(event);
@@ -132,7 +132,7 @@ public class AppointmentFormController implements Initializable {
         int customerID = customerComboBox.getSelectionModel().getSelectedItem().getId();
         int contactID = contactComboBox.getSelectionModel().getSelectedItem().getId();
 
-        if (!hasConflictingAppointment(customerID, start, end) && isWithinBusinessHours(start, end)) {
+        if (!hasConflictingAppointment(customerID, start, end, id) && isWithinBusinessHours(start, end)) {
             DBAppointments.updateAppointment(id, title, description, location, type, start, end, customerID, contactID, userID);
 
             showAppointments(event);
@@ -147,24 +147,26 @@ public class AppointmentFormController implements Initializable {
         stage.show();
     }
     
-    private boolean hasConflictingAppointment(int customerID, LocalDateTime start, LocalDateTime end){
+    private boolean hasConflictingAppointment(int customerID, LocalDateTime start, LocalDateTime end, int appointmentID){
         ObservableList<Appointment> appointments = DBAppointments.getAppointmentsForCustomer(customerID);
 
         for (Appointment appointment : appointments) {
-            if (start.isEqual(appointment.getStart()) || start.isAfter(appointment.getStart()) && start.isBefore(appointment.getEnd()) || end.isAfter(appointment.getStart()) && end.isBefore(appointment.getEnd())) {
-                Alert error = new Alert(Alert.AlertType.ERROR);
-                error.setTitle("Appointment Conflict");
-                error.setHeaderText("Appointment Conflict");
-                error.setContentText("This appointment conflicts with the following appointment: \n \n"
-                                + "ID: " + appointment.getId()
-                                + "\nTitle: " + appointment.getTitle()
-                                + "\nStart: " + appointment.getStart()
-                                + "\nEnd: " + appointment.getEnd()
-                                + "\n\nPlease choose a different time."
-                );
-                error.showAndWait();
+            if (appointmentID != appointment.getId()) { //Don't check appointment for conflicts with itself
+                if (start.isEqual(appointment.getStart()) || start.isAfter(appointment.getStart()) && start.isBefore(appointment.getEnd()) || end.isAfter(appointment.getStart()) && end.isBefore(appointment.getEnd())) {
+                    Alert error = new Alert(Alert.AlertType.ERROR);
+                    error.setTitle("Appointment Conflict");
+                    error.setHeaderText("Appointment Conflict");
+                    error.setContentText("This appointment conflicts with the following appointment: \n \n"
+                            + "ID: " + appointment.getId()
+                            + "\nTitle: " + appointment.getTitle()
+                            + "\nStart: " + appointment.getStart()
+                            + "\nEnd: " + appointment.getEnd()
+                            + "\n\nPlease choose a different time."
+                    );
+                    error.showAndWait();
 
-                return true;
+                    return true;
+                }
             }
         }
         return false;
