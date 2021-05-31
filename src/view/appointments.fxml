@@ -75,17 +75,6 @@
                               <Insets bottom="20.0" top="20.0" />
                            </VBox.margin>
                         </Label>
-                        <TabPane prefHeight="30.0" prefWidth="733.0" tabClosingPolicy="UNAVAILABLE">
-                          <tabs>
-                            <Tab onSelectionChanged="#onMonthSelected" text="Month" />
-                            <Tab onSelectionChanged="#onWeekSelected" text="Week" />
-                              <Tab onSelectionChanged="#onAllSelected" text="All Appointments">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                </content>
-                              </Tab>
-                          </tabs>
-                        </TabPane>
                         <TableView fx:id="appointmentTableView" prefHeight="513.0" prefWidth="733.0">
                           <columns>
                             <TableColumn fx:id="idCol" prefWidth="37.11798095703125" text="ID" />
@@ -99,6 +88,9 @@
                               <TableColumn fx:id="custIDCol" prefWidth="74.0" text="Customer ID" />
                               <TableColumn fx:id="customerNameCol" prefWidth="75.0" text="Customer Name" />
                           </columns>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
                         </TableView>
                         <ButtonBar prefHeight="40.0" prefWidth="200.0">
                           <buttons>
@@ -112,6 +104,16 @@
                         <Insets left="20.0" right="20.0" />
                      </padding>
                   </VBox>
+                  <TabPane layoutY="84.0" prefHeight="31.0" prefWidth="753.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab onSelectionChanged="#onAllSelected" text="All Appointments" />
+                      <Tab onSelectionChanged="#onMonthSelected" text="Month" />
+                      <Tab onSelectionChanged="#onWeekSelected" text="Week" />
+                    </tabs>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </TabPane>
                </children>
             </AnchorPane>
         </items>

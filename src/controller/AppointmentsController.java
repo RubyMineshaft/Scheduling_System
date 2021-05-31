@@ -1,6 +1,8 @@
 package controller;
 
 import DBAccess.DBAppointments;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -63,9 +65,16 @@ public class AppointmentsController implements Initializable {
     @FXML
     private TableColumn<Appointment, String> customerNameCol;
 
-    @FXML
-    void onAllSelected(Event event) {
+    private FilteredList<Appointment> appointmentFilteredList = new FilteredList<>(DBAppointments.getAllAppointments(), p -> true);
 
+
+    /** Uses lambda expression to clear filter and show all appointments in one line of code.
+     * @param ignored
+     */
+    @FXML
+    void onAllSelected(Event ignored) {
+        appointmentFilteredList.setPredicate(p -> true);
+        appointmentTableView.setItems(appointmentFilteredList);
     }
 
     @FXML
@@ -141,9 +150,15 @@ public class AppointmentsController implements Initializable {
         loadScene(event, "customers");
     }
 
+    /** Uses lambda expression to reduce lines of code when filtering by upcoming month.
+     * @param ignored
+     */
     @FXML
-    void onMonthSelected(Event event) {
+    void onMonthSelected(Event ignored) {
+        LocalDateTime oneMonth = LocalDateTime.now().plusMonths(1);
 
+        appointmentFilteredList.setPredicate(appointment -> appointment.getStart().isAfter(LocalDateTime.now()) && appointment.getStart().isBefore(oneMonth));
+        appointmentTableView.setItems(appointmentFilteredList);
     }
 
     @FXML
@@ -156,9 +171,15 @@ public class AppointmentsController implements Initializable {
 
     }
 
+    /** Uses lambda expression to reduce lines of code when filtering appointments.
+     * @param ignored
+     */
     @FXML
-    void onWeekSelected(Event event) {
+    void onWeekSelected(Event ignored) {
+        LocalDateTime oneWeek = LocalDateTime.now().plusWeeks(1);
 
+        appointmentFilteredList.setPredicate(appointment -> appointment.getStart().isAfter(LocalDateTime.now()) && appointment.getStart().isBefore(oneWeek));
+        appointmentTableView.setItems(appointmentFilteredList);
     }
 
     private void loadScene(ActionEvent event, String view) throws IOException {
@@ -173,7 +194,7 @@ public class AppointmentsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userLabel.setText(User.getCurrentUser().getUsername());
 
-        appointmentTableView.setItems(DBAppointments.getAllAppointments());
+        appointmentTableView.setItems(appointmentFilteredList);
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
