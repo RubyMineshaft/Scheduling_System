@@ -38,7 +38,7 @@ public class DBAppointments {
                 String contactName = rs.getString("Contact_Name");
                 String customerName = rs.getString("Customer_Name");
 
-                Appointment appointment = new Appointment(id, customerID, contactID, title, description, location, type, start, end, created, contactName, customerName);
+                Appointment appointment = new Appointment(id, customerID, contactID, title, description, location, type, start, end, created, contactName, customerName, userID);
 
                 appointments.add(appointment);
             }
@@ -93,5 +93,36 @@ public class DBAppointments {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public static ObservableList<Appointment> getAppointmentsForCustomer(int customerID) {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, customerID);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                int id = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String description = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                LocalDateTime created = rs.getTimestamp("Create_Date").toLocalDateTime();
+                int userID = rs.getInt("User_ID");
+                int contactID = rs.getInt("Contact_ID");
+
+                Appointment appointment = new Appointment(id, customerID, contactID, title, description, location, type, start, end, created, userID);
+
+                appointments.add(appointment);            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return appointments;
     }
 }

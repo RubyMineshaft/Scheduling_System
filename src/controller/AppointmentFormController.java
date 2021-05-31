@@ -3,6 +3,8 @@ package controller;
 import DBAccess.DBAppointments;
 import DBAccess.DBContacts;
 import DBAccess.DBCustomers;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Appointment;
 import model.Contact;
 import model.Customer;
 
@@ -76,9 +79,11 @@ public class AppointmentFormController implements Initializable {
         int customerID = customerComboBox.getSelectionModel().getSelectedItem().getId();
         int contactID = contactComboBox.getSelectionModel().getSelectedItem().getId();
 
-        DBAppointments.createAppointment(title, description, location, type, start, end, customerID, contactID);
+        if (!hasConflictingAppointment(customerID, start, end) && isWithinBusinessHours(start, end)) {
+            DBAppointments.createAppointment(title, description, location, type, start, end, customerID, contactID);
 
-        showAppointments(event);
+            showAppointments(event);
+        }
     }
 
     private void showAppointments(ActionEvent event) throws IOException {
@@ -87,6 +92,34 @@ public class AppointmentFormController implements Initializable {
         stage.setScene(new Scene(scene));
         stage.centerOnScreen();
         stage.show();
+    }
+    
+    private boolean hasConflictingAppointment(int customerID, LocalDateTime start, LocalDateTime end){
+        ObservableList<Appointment> appointments = DBAppointments.getAppointmentsForCustomer(customerID);
+
+        for (Appointment appointment : appointments) {
+            if (start.isEqual(appointment.getStart()) || start.isAfter(appointment.getStart()) && start.isBefore(appointment.getEnd()) || end.isAfter(appointment.getStart()) && end.isBefore(appointment.getEnd())) {
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Appointment Conflict");
+                error.setHeaderText("Appointment Conflict");
+                error.setContentText("This appointment conflicts with the following appointment: \n \n"
+                                + "ID: " + appointment.getId()
+                                + "\nTitle: " + appointment.getTitle()
+                                + "\nStart: " + appointment.getStart()
+                                + "\nEnd: " + appointment.getEnd()
+                                + "\n\nPlease choose a different time."
+                );
+                error.showAndWait();
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isWithinBusinessHours(LocalDateTime start, LocalDateTime end) {
+
+        return true;
     }
 
 
