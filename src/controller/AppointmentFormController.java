@@ -152,7 +152,7 @@ public class AppointmentFormController implements Initializable {
 
         for (Appointment appointment : appointments) {
             if (appointmentID != appointment.getId()) { //Don't check appointment for conflicts with itself
-                if (start.isEqual(appointment.getStart()) || start.isAfter(appointment.getStart()) && start.isBefore(appointment.getEnd()) || end.isAfter(appointment.getStart()) && end.isBefore(appointment.getEnd())) {
+                if (start.isEqual(appointment.getStart()) || start.isAfter(appointment.getStart()) && start.isBefore(appointment.getEnd()) || end.isAfter(appointment.getStart()) && end.isBefore(appointment.getEnd()) || start.isBefore(appointment.getStart()) && end.isAfter(appointment.getEnd())) {
                     Alert error = new Alert(Alert.AlertType.ERROR);
                     error.setTitle("Appointment Conflict");
                     error.setHeaderText("Appointment Conflict");
