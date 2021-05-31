@@ -3,11 +3,13 @@ package DBAccess;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
+import model.User;
 import util.DBConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class DBAppointments {
@@ -40,11 +42,9 @@ public class DBAppointments {
 
                 appointments.add(appointment);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return appointments;
     }
 
@@ -72,7 +72,26 @@ public class DBAppointments {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
+    public static void createAppointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int contactID) {
+        String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Created_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setString(1, title);
+            ps.setString(2, description);
+            ps.setString(3, location);
+            ps.setString(4, type);
+            ps.setTimestamp(5, Timestamp.valueOf(start));
+            ps.setTimestamp(6, Timestamp.valueOf(end));
+            ps.setString(7, User.getCurrentUser().getUsername());
+            ps.setInt(8, customerID);
+            ps.setInt(9, User.getCurrentUser().getId());
+            ps.setInt(10, contactID);
+
+            ps.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }
