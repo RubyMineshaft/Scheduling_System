@@ -45,6 +45,33 @@ public class DBCustomers {
         return customerList;
     }
 
+    public static Customer getCustomer(int id) {
+        Customer customer = null;
+        String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
+
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            int customerID = rs.getInt("Customer_ID");
+            String customerName = rs.getString("Customer_Name");
+            String address = rs.getString("Address");
+            String postalCode = rs.getString("Postal_Code");
+            String phone = rs.getString("Phone");
+            int divisionId = rs.getInt("Division_ID");
+            String division = rs.getString("Division");
+
+            customer = new Customer(customerID, customerName, address, postalCode, phone, divisionId, division);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return customer;
+    }
+
     public static void createCustomer(String name, String address, String postalCode, String phone, int divisionID) {
         try{
            String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID, Created_By) VALUES (?,?,?,?,?,?)";
@@ -64,8 +91,6 @@ public class DBCustomers {
     }
 
     public static void deleteCustomer(int customerID){
-
-        //TODO: Delete Appointments for customer first!
         try {
             String sql = "DELETE FROM customers WHERE Customer_ID = ?";
 
@@ -78,8 +103,6 @@ public class DBCustomers {
         }
     }
 
-
-    //TODO: Preserve create date.
     public static void updateCustomer(int id, String name, String address, String postalCode, String phone, int divisionID) {
         try {
             String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Division_ID = ?, Phone = ?, Last_Updated_By = ? WHERE Customer_ID = ?";

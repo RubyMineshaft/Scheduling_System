@@ -20,9 +20,13 @@ import model.Customer;
 import java.io.IOException;
 import java.net.URL;
 import java.time.*;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AppointmentFormController implements Initializable {
+
+    @FXML
+    private Button saveBtn;
 
     @FXML
     private Label titleLbl;
@@ -61,8 +65,17 @@ public class AppointmentFormController implements Initializable {
     private ComboBox<Customer> customerComboBox;
 
     @FXML
-    void onCancel(ActionEvent event) {
+    void onCancel(ActionEvent event) throws IOException {
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Changes not saved");
+        confirmation.setHeaderText("Changes will not be saved");
+        confirmation.setContentText("The changes to this appointment will not be saved. Are you sure you want to cancel?");
 
+        Optional<ButtonType> result = confirmation.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            showAppointments(event);
+        }
     }
 
     @FXML
@@ -79,6 +92,48 @@ public class AppointmentFormController implements Initializable {
 
         if (!hasConflictingAppointment(customerID, start, end) && isWithinBusinessHours(start, end)) {
             DBAppointments.createAppointment(title, description, location, type, start, end, customerID, contactID);
+
+            showAppointments(event);
+        }
+    }
+
+    public void editAppointment(Appointment appointment) {
+        titleLbl.setText("Edit Appointment");
+        idTxt.setText(String.valueOf(appointment.getId()));
+        titleTxt.setText(appointment.getTitle());
+        descTxt.setText(appointment.getDescription());
+        locationTxt.setText(appointment.getLocation());
+        contactComboBox.getSelectionModel().select(DBContacts.getContact(appointment.getContactID()));
+        typeTxt.setText(appointment.getType());
+        startDatePicker.setValue(appointment.getStart().toLocalDate());
+        startTime.getSelectionModel().select(appointment.getStart().toLocalTime());
+        endDatePicker.setValue(appointment.getEnd().toLocalDate());
+        endTime.getSelectionModel().select(appointment.getEnd().toLocalTime());
+        customerComboBox.getSelectionModel().select(DBCustomers.getCustomer(appointment.getCustomerID()));
+
+        saveBtn.setText("Update");
+        saveBtn.setOnAction(event -> {
+            try {
+                updateAppointment(event, appointment.getUserID());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void updateAppointment(ActionEvent event, int userID) throws IOException {
+        int id = Integer.parseInt(idTxt.getText());
+        String title = titleTxt.getText();
+        String description = descTxt.getText();
+        String location = locationTxt.getText();
+        String type = typeTxt.getText();
+        LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), startTime.getValue());
+        LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), endTime.getValue());
+        int customerID = customerComboBox.getSelectionModel().getSelectedItem().getId();
+        int contactID = contactComboBox.getSelectionModel().getSelectedItem().getId();
+
+        if (!hasConflictingAppointment(customerID, start, end) && isWithinBusinessHours(start, end)) {
+            DBAppointments.updateAppointment(id, title, description, location, type, start, end, customerID, contactID, userID);
 
             showAppointments(event);
         }

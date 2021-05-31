@@ -95,6 +95,30 @@ public class DBAppointments {
         }
     }
 
+    public static void updateAppointment(int id, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int contactID, int userID) {
+        String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ?, Last_Updated_By = ? WHERE Appointment_ID = ?";
+
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ps.setString(1, title);
+            ps.setString(2, description);
+            ps.setString(3, location);
+            ps.setString(4, type);
+            ps.setTimestamp(5, Timestamp.valueOf(start));
+            ps.setTimestamp(6, Timestamp.valueOf(end));
+            ps.setInt(7, customerID);
+            ps.setInt(8, userID);
+            ps.setInt(9, contactID);
+            ps.setString(10, User.getCurrentUser().getUsername());
+            ps.setInt(11, id);
+
+            ps.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public static ObservableList<Appointment> getAppointmentsForCustomer(int customerID) {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
