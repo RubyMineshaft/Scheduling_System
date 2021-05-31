@@ -30,7 +30,7 @@ public class AppointmentsController implements Initializable {
     Parent scene;
 
     @FXML
-    private Label userLabel;
+    private Label userLabel, upcomingLbl;
 
     @FXML
     private TableView<Appointment> appointmentTableView;
@@ -190,9 +190,22 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
+    private void checkUpcomingAppointments() {
+        ObservableList<Appointment> appointments = DBAppointments.getUpcomingAppointmentsForUser(User.getCurrentUser().getId());
+
+        if (appointments.size() == 0) {
+            upcomingLbl.setText("No appointments within 15 minutes");
+        } else {
+            Appointment appointment = appointments.get(0);
+            upcomingLbl.setText("Appointment " + appointment.getId() + "    " + appointment.getStart().toLocalDate() + "    " + appointment.getStart().toLocalTime());
+        }
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userLabel.setText(User.getCurrentUser().getUsername());
+        checkUpcomingAppointments();
 
         appointmentTableView.setItems(appointmentFilteredList);
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));

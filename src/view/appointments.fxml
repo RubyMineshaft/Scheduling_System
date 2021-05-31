@@ -114,6 +114,16 @@
                         <Insets left="20.0" />
                      </padding>
                   </TabPane>
+                  <Label layoutY="640.0" text="Upcoming Appointment:">
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="upcomingLbl" layoutY="660.0" text="No appointments within 15 minutes">
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </Label>
                </children>
             </AnchorPane>
         </items>

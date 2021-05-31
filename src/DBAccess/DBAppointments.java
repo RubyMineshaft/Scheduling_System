@@ -74,6 +74,44 @@ public class DBAppointments {
         }
     }
 
+    public static ObservableList<Appointment> getUpcomingAppointmentsForUser(int userID) {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        String sql = "SELECT a.*, c.Contact_Name, x.Customer_Name FROM appointments a JOIN contacts c ON a.Contact_ID = c.Contact_ID JOIN customers x ON a.Customer_ID = x.Customer_ID WHERE User_ID = ? AND Start > ? AND Start < ?";
+
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ps.setInt(1, userID);
+            ps.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now().plusMinutes(15)));
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String description = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                LocalDateTime created = rs.getTimestamp("Create_Date").toLocalDateTime();
+                int customerID = rs.getInt("Customer_ID");
+                int contactID = rs.getInt("Contact_ID");
+                String contactName = rs.getString("Contact_Name");
+                String customerName = rs.getString("Customer_Name");
+
+                Appointment appointment = new Appointment(id, customerID, contactID, title, description, location, type, start, end, created, contactName, customerName, userID);
+
+                appointments.add(appointment);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return appointments;
+    }
+
     public static void createAppointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int contactID) {
         String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Created_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {
