@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.Customer;
 import model.User;
 
 import java.io.IOException;
@@ -91,8 +92,30 @@ public class AppointmentsController implements Initializable {
     }
 
     @FXML
-    void onEditAppointment(ActionEvent event) {
+    void onEditAppointment(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/appointmentForm.fxml"));
+        loader.load();
 
+        AppointmentFormController controller = loader.getController();
+
+        Appointment selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
+        if (selectedAppointment == null) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Edit Appointment");
+            error.setHeaderText("Selection Error");
+            error.setContentText("You must choose an appointment to edit.");
+
+            error.showAndWait();
+        } else {
+            controller.editAppointment(selectedAppointment);
+
+            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.centerOnScreen();
+            stage.show();
+        }
     }
 
     @FXML

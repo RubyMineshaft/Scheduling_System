@@ -47,7 +47,7 @@ public class DBCustomers {
 
     public static Customer getCustomer(int id) {
         Customer customer = null;
-        String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
+        String sql = "SELECT * FROM customers c JOIN first_level_divisions d ON c.Division_ID = d.Division_ID WHERE Customer_ID = ?";
 
         try {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
