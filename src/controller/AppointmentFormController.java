@@ -3,7 +3,6 @@ package controller;
 import DBAccess.DBAppointments;
 import DBAccess.DBContacts;
 import DBAccess.DBCustomers;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,7 +23,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AppointmentFormController implements Initializable {
-
+//todo: set end date when start date is selected
     @FXML
     private Button saveBtn;
 
@@ -80,6 +79,7 @@ public class AppointmentFormController implements Initializable {
 
     @FXML
     void onSave(ActionEvent event) throws IOException {
+        //TODO: Make form fields required
 
         String title = titleTxt.getText();
         String description = descTxt.getText();
@@ -90,7 +90,9 @@ public class AppointmentFormController implements Initializable {
         int customerID = customerComboBox.getSelectionModel().getSelectedItem().getId();
         int contactID = contactComboBox.getSelectionModel().getSelectedItem().getId();
 
-        if (!hasConflictingAppointment(customerID, start, end, 0) && isWithinBusinessHours(start, end)) {
+        if (hasNoConflictingAppointment(customerID, start, end, 0) && isWithinBusinessHours(start, end)) {
+
+            //TODO: check that end is after start
             DBAppointments.createAppointment(title, description, location, type, start, end, customerID, contactID);
 
             showAppointments(event);
@@ -132,7 +134,7 @@ public class AppointmentFormController implements Initializable {
         int customerID = customerComboBox.getSelectionModel().getSelectedItem().getId();
         int contactID = contactComboBox.getSelectionModel().getSelectedItem().getId();
 
-        if (!hasConflictingAppointment(customerID, start, end, id) && isWithinBusinessHours(start, end)) {
+        if (hasNoConflictingAppointment(customerID, start, end, id) && isWithinBusinessHours(start, end)) {
             DBAppointments.updateAppointment(id, title, description, location, type, start, end, customerID, contactID, userID);
 
             showAppointments(event);
@@ -147,7 +149,7 @@ public class AppointmentFormController implements Initializable {
         stage.show();
     }
     
-    private boolean hasConflictingAppointment(int customerID, LocalDateTime start, LocalDateTime end, int appointmentID){
+    private boolean hasNoConflictingAppointment(int customerID, LocalDateTime start, LocalDateTime end, int appointmentID){
         ObservableList<Appointment> appointments = DBAppointments.getAppointmentsForCustomer(customerID);
 
         for (Appointment appointment : appointments) {
@@ -165,11 +167,11 @@ public class AppointmentFormController implements Initializable {
                     );
                     error.showAndWait();
 
-                    return true;
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
     private boolean isWithinBusinessHours(LocalDateTime start, LocalDateTime end) {

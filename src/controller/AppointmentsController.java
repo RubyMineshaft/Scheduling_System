@@ -4,7 +4,6 @@ import DBAccess.DBAppointments;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,15 +13,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
-import model.Customer;
 import model.User;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class AppointmentsController implements Initializable {
 
@@ -65,20 +63,51 @@ public class AppointmentsController implements Initializable {
     @FXML
     private TableColumn<Appointment, String> customerNameCol;
 
-    private FilteredList<Appointment> appointmentFilteredList = new FilteredList<>(DBAppointments.getAllAppointments(), p -> true);
+    @FXML
+    private TabPane apptTabs;
+
+    @FXML
+    private Tab allTab;
+
+    @FXML
+    private Tab monthTab;
+
+    @FXML
+    private Tab weekTab;
+
 
 
     /** Uses lambda expression to clear filter and show all appointments in one line of code.
-     * @param ignored
      */
     @FXML
-    void onAllSelected(Event ignored) {
-        appointmentFilteredList.setPredicate(p -> true);
-        appointmentTableView.setItems(appointmentFilteredList);
+    void onAllSelected() {
+        setTableItems();
+    }
+
+    private void setTableItems() {
+        ObservableList<Appointment> appointmentList = DBAppointments.getAllAppointments();
+        FilteredList<Appointment> appointmentFilteredList = new FilteredList<>(appointmentList, p -> true);
+        Tab selectedTab = apptTabs.getSelectionModel().getSelectedItem();
+
+
+        if (selectedTab == allTab) {
+            appointmentTableView.setItems(appointmentFilteredList);
+        } else if (selectedTab == weekTab) {
+            LocalDateTime oneWeek = LocalDateTime.now().plusWeeks(1);
+
+            appointmentFilteredList.setPredicate(appointment -> appointment.getStart().isAfter(LocalDateTime.now()) && appointment.getStart().isBefore(oneWeek));
+            appointmentTableView.setItems(appointmentFilteredList);
+        } else if (selectedTab == monthTab) {
+            LocalDateTime oneMonth = LocalDateTime.now().plusMonths(1);
+
+            appointmentFilteredList.setPredicate(appointment -> appointment.getStart().isAfter(LocalDateTime.now()) && appointment.getStart().isBefore(oneMonth));
+            appointmentTableView.setItems(appointmentFilteredList);
+        }
+
     }
 
     @FXML
-    void onDeleteAppointment(ActionEvent event) {
+    void onDeleteAppointment() {
         Appointment appointment = appointmentTableView.getSelectionModel().getSelectedItem();
 
         if (appointment == null) {
@@ -99,7 +128,9 @@ public class AppointmentsController implements Initializable {
 
             if (result.get() == ButtonType.OK) {
                 DBAppointments.deleteAppointment(appointment.getId());
-                appointmentTableView.getItems().remove(appointment);
+                //appointmentTableView.getItems().remove(appointment);
+                setTableItems();
+
 
                 Alert deleted = new Alert(Alert.AlertType.INFORMATION);
                 deleted.setTitle("Appointment Deleted");
@@ -151,14 +182,10 @@ public class AppointmentsController implements Initializable {
     }
 
     /** Uses lambda expression to reduce lines of code when filtering by upcoming month.
-     * @param ignored
      */
     @FXML
-    void onMonthSelected(Event ignored) {
-        LocalDateTime oneMonth = LocalDateTime.now().plusMonths(1);
-
-        appointmentFilteredList.setPredicate(appointment -> appointment.getStart().isAfter(LocalDateTime.now()) && appointment.getStart().isBefore(oneMonth));
-        appointmentTableView.setItems(appointmentFilteredList);
+    void onMonthSelected() {
+        setTableItems();
     }
 
     @FXML
@@ -172,14 +199,10 @@ public class AppointmentsController implements Initializable {
     }
 
     /** Uses lambda expression to reduce lines of code when filtering appointments.
-     * @param ignored
      */
     @FXML
-    void onWeekSelected(Event ignored) {
-        LocalDateTime oneWeek = LocalDateTime.now().plusWeeks(1);
-
-        appointmentFilteredList.setPredicate(appointment -> appointment.getStart().isAfter(LocalDateTime.now()) && appointment.getStart().isBefore(oneWeek));
-        appointmentTableView.setItems(appointmentFilteredList);
+    void onWeekSelected() {
+        setTableItems();
     }
 
     private void loadScene(ActionEvent event, String view) throws IOException {
@@ -207,7 +230,7 @@ public class AppointmentsController implements Initializable {
         userLabel.setText(User.getCurrentUser().getUsername());
         checkUpcomingAppointments();
 
-        appointmentTableView.setItems(appointmentFilteredList);
+        setTableItems();
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));

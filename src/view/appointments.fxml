@@ -104,11 +104,11 @@
                         <Insets left="20.0" right="20.0" />
                      </padding>
                   </VBox>
-                  <TabPane layoutY="84.0" prefHeight="31.0" prefWidth="753.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane fx:id="apptTabs" layoutY="84.0" prefHeight="31.0" prefWidth="753.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                        <Tab onSelectionChanged="#onAllSelected" text="All Appointments" />
-                      <Tab onSelectionChanged="#onMonthSelected" text="Month" />
-                      <Tab onSelectionChanged="#onWeekSelected" text="Week" />
+                        <Tab fx:id="allTab" onSelectionChanged="#onAllSelected" text="All Appointments" />
+                      <Tab fx:id="monthTab" onSelectionChanged="#onMonthSelected" text="Month" />
+                      <Tab fx:id="weekTab" onSelectionChanged="#onWeekSelected" text="Week" />
                     </tabs>
                      <padding>
                         <Insets left="20.0" />
