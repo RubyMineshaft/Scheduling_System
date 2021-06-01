@@ -44,7 +44,7 @@ public class LoginController implements Initializable {
     @FXML
     void onSubmit(ActionEvent event) throws IOException {
 
-        FileWriter fileWriter = new FileWriter("src/login_activity.txt", true);
+        FileWriter fileWriter = new FileWriter("login_activity.txt", true);
         PrintWriter log = new PrintWriter(fileWriter);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
