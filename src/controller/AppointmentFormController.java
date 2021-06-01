@@ -19,8 +19,7 @@ import model.Customer;
 import java.io.IOException;
 import java.net.URL;
 import java.time.*;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AppointmentFormController implements Initializable {
 //todo: set end date when start date is selected
@@ -85,18 +84,44 @@ public class AppointmentFormController implements Initializable {
         String description = descTxt.getText();
         String location = locationTxt.getText();
         String type = typeTxt.getText();
-        LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), startTime.getValue());
-        LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), endTime.getValue());
-        int customerID = customerComboBox.getSelectionModel().getSelectedItem().getId();
-        int contactID = contactComboBox.getSelectionModel().getSelectedItem().getId();
+        Customer selectedCustomer = customerComboBox.getSelectionModel().getSelectedItem();
+        Contact selectedContact = contactComboBox.getSelectionModel().getSelectedItem();
 
-        if (hasNoConflictingAppointment(customerID, start, end, 0) && isWithinBusinessHours(start, end)) {
+        if (hasNull(title, description, location, type, startDatePicker.getValue(), startTime.getValue(), endDatePicker.getValue(), endTime.getValue(), selectedContact, selectedCustomer)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Missing Field(s)");
+            alert.setContentText("All fields are required. Check inputs and try again.");
+            alert.showAndWait();
+        } else {
+            LocalDateTime start = LocalDateTime.of(startDatePicker.getValue(), startTime.getValue());
+            LocalDateTime end = LocalDateTime.of(endDatePicker.getValue(), endTime.getValue());
+            int customerID = selectedCustomer.getId();
+            int contactID = selectedContact.getId();
 
-            //TODO: check that end is after start
-            DBAppointments.createAppointment(title, description, location, type, start, end, customerID, contactID);
+            if (hasNoConflictingAppointment(customerID, start, end, 0) && isWithinBusinessHours(start, end) && startIsBeforeEnd(start, end)) {
+                DBAppointments.createAppointment(title, description, location, type, start, end, customerID, contactID);
 
-            showAppointments(event);
+                showAppointments(event);
+            }
         }
+    }
+
+    private boolean hasNull(Object... args){
+        List<Object> test = new ArrayList<Object>(Arrays.asList(args));
+        return test.contains(null);
+    }
+
+    private boolean startIsBeforeEnd(LocalDateTime start, LocalDateTime end) {
+        if (end.isBefore(start)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Check Dates");
+            alert.setContentText("Appointments cannot end before they begin. Check the dates and try again.");
+            alert.showAndWait();
+
+            return false;
+        }
+        return true;
     }
 
     public void editAppointment(Appointment appointment) {
