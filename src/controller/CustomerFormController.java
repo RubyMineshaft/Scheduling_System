@@ -18,13 +18,9 @@ import util.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CustomerFormController implements Initializable {
-
-    private Stage stage;
-    private Parent scene;
 
     @FXML
     private Button saveBtn;
@@ -70,19 +66,35 @@ public class CustomerFormController implements Initializable {
     @FXML
     void onSave(ActionEvent event) throws IOException {
         String name = nameTxt.getText();
-        int divisionID = divisionBox.getSelectionModel().getSelectedItem().getId();
+        Country selectedCountry = countryBox.getSelectionModel().getSelectedItem();
+        FirstLevelDivision selectedDivision = divisionBox.getSelectionModel().getSelectedItem();
         String address = addressTxt.getText();
         String postalCode = postalTxt.getText();
         String phone = phoneTxt.getText();
 
-        DBCustomers.createCustomer(name, address, postalCode, phone, divisionID);
+        if (hasNull(name, selectedCountry, selectedDivision, address, postalCode, phone)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Missing Field(s)");
+            alert.setContentText("All fields are required. Check inputs and try again.");
+            alert.showAndWait();
+        } else {
+            int divisionID = divisionBox.getSelectionModel().getSelectedItem().getId();
 
-        showCustomers(event);
+            DBCustomers.createCustomer(name, address, postalCode, phone, divisionID);
+
+            showCustomers(event);
+        }
     }
 
+    private boolean hasNull(Object... args){
+        List<Object> test = new ArrayList<>(Arrays.asList(args));
+        return test.contains(null);
+    }
+
+
     private void showCustomers(ActionEvent event) throws IOException {
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/view/customers.fxml"));
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        Parent scene = FXMLLoader.load(getClass().getResource("/view/customers.fxml"));
         stage.setScene(new Scene(scene));
         stage.centerOnScreen();
         stage.show();
