@@ -9,10 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Country;
 import model.Customer;
@@ -21,6 +18,7 @@ import util.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CustomerFormController implements Initializable {
@@ -57,8 +55,16 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void onCancel(ActionEvent event) throws IOException {
-        //TODO: show confirmation prompt
-        showCustomers(event);
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Changes not saved");
+        confirmation.setHeaderText("Changes will not be saved");
+        confirmation.setContentText("The changes to this customer will not be saved. Are you sure you want to cancel?");
+
+        Optional<ButtonType> result = confirmation.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            showCustomers(event);
+        }
     }
 
     @FXML
