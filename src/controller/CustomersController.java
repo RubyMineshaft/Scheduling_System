@@ -62,8 +62,8 @@ public class CustomersController implements Initializable {
     }
 
     @FXML
-    void onReports(ActionEvent event) {
-
+    void onReports(ActionEvent event) throws IOException {
+        loadScene(event, "reports");
     }
 
     @FXML

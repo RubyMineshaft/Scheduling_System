@@ -103,6 +103,15 @@ public class DBCustomers {
         }
     }
 
+    public static ResultSet getCustomerPerDivisionForCountry(int countryID) throws SQLException {
+        String sql = "SELECT d.Division AS Division, c.Customer_Name AS Customer, COUNT(*) AS Num FROM first_level_divisions d JOIN customers c ON c.Division_ID = d.Division_ID WHERE Country_ID = ? GROUP BY Division, Customer";
+
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+        ps.setInt(1, countryID);
+
+        return ps.executeQuery();
+    }
+
     public static void updateCustomer(int id, String name, String address, String postalCode, String phone, int divisionID) {
         try {
             String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Division_ID = ?, Phone = ?, Last_Updated_By = ? WHERE Customer_ID = ?";

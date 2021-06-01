@@ -167,8 +167,8 @@ public class AppointmentsController implements Initializable {
     }
 
     @FXML
-    void onReports(ActionEvent event) {
-
+    void onReports(ActionEvent event) throws IOException {
+        loadScene(event, "reports");
     }
 
     /** Uses lambda expression to reduce lines of code when filtering appointments.

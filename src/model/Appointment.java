@@ -1,5 +1,7 @@
 package model;
 
+import DBAccess.DBCustomers;
+
 import java.time.LocalDateTime;
 
 public class Appointment {
@@ -88,5 +90,14 @@ public class Appointment {
         this.start = start;
         this.end = end;
         this.createDate = created;
+    }
+
+    @Override
+    public String toString(){
+            String apptString = "Apt. " + id + " - " + title + " - " + description + "\n"
+                    + start.toLocalDate() + " " + start.toLocalTime() + " to " + end.toLocalDate() + " " + end.toLocalTime() + "\n"
+                    + "Customer " + DBCustomers.getCustomer(customerID);
+
+        return apptString;
     }
 }
