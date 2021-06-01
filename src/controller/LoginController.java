@@ -21,6 +21,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -40,6 +41,7 @@ public class LoginController implements Initializable {
     @FXML
     private Button submitBtn;
 
+    private ResourceBundle rb = ResourceBundle.getBundle("Resources/Login", Locale.getDefault());
 
     @FXML
     void onSubmit(ActionEvent event) throws IOException {
@@ -59,7 +61,7 @@ public class LoginController implements Initializable {
             log.println(LocalDateTime.now().format(formatter) + " -- Failed login by " + username);
             userIDField.setText("");
             passwordField.setText("");
-            errorLbl.setText("Error logging in. Check credentials and try again.");
+            errorLbl.setText(rb.getString("loginError"));
             userIDField.requestFocus();
         }
         log.close();
@@ -94,6 +96,13 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         errorLbl.setText("");
+        errorLbl.setWrapText(true);
         zoneLbl.setText(ZoneId.systemDefault().getId());
+
+        loginLbl.setText(rb.getString("login"));
+        userIDLbl.setText(rb.getString("userID"));
+        passwordLbl.setText(rb.getString("password"));
+        zoneIDLbl.setText(rb.getString("zoneID"));
+        submitBtn.setText(rb.getString("submit"));
     }
 }

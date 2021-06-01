@@ -15,6 +15,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="282.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
+      <HBox alignment="BOTTOM_LEFT" layoutX="9.0" layoutY="262.0" prefHeight="16.0" prefWidth="390.0">
+         <children>
+            <Label fx:id="zoneIDLbl" text="Zone ID: " />
+            <Label fx:id="zoneLbl" text="Label" />
+         </children>
+      </HBox>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0">
          <children>
             <Label fx:id="loginLbl" alignment="CENTER" text="Log In">
@@ -65,16 +71,7 @@
                   <Insets right="25.0" />
                </VBox.margin>
             </HBox>
-            <Label fx:id="errorLbl" text="Label" textFill="#cd1c1c" />
-            <HBox alignment="BOTTOM_LEFT" prefHeight="40.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="zoneIDLbl" text="Zone ID: " />
-                  <Label fx:id="zoneLbl" text="Label" />
-               </children>
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin>
-            </HBox>
+            <Label fx:id="errorLbl" text="Label" textAlignment="CENTER" textFill="#cd1c1c" />
          </children>
          <padding>
             <Insets top="25.0" />
