@@ -5,16 +5,23 @@ import DBAccess.DBContacts;
 import DBAccess.DBCountries;
 import DBAccess.DBCustomers;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import model.Appointment;
 import model.Contact;
 import model.Country;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +31,15 @@ public class ReportsController implements Initializable {
 
     @FXML
     private VBox typeBox, contactScheduleBox, divisionBox;
+
+    @FXML
+    void onClose(ActionEvent event) throws IOException {
+        Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        Parent scene = FXMLLoader.load(getClass().getResource("/view/appointments.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.centerOnScreen();
+        stage.show();
+    }
 
     private void generateTypeReport() throws SQLException {
         ResultSet rs = DBAppointments.getTypePerMonth();
@@ -86,4 +102,5 @@ public class ReportsController implements Initializable {
             throwables.printStackTrace();
         }
     }
+
 }

@@ -101,7 +101,7 @@
             </HBox>
             <ButtonBar prefHeight="40.0" prefWidth="200.0">
               <buttons>
-                <Button mnemonicParsing="false" text="Close" />
+                <Button mnemonicParsing="false" onAction="#onClose" text="Close" />
               </buttons>
                <VBox.margin>
                   <Insets right="25.0" top="15.0" />
