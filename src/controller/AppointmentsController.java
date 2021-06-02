@@ -134,7 +134,7 @@ public class AppointmentsController implements Initializable {
     }
 
     /** Discussion of lambda.
-     * Uses lambda expression to clear filter and show all appointments in one line of code.
+     * Uses lambda expression to quickly clear filter and show all appointments in one line of code.
      * */
     @FXML
     void onAllSelected() {
@@ -154,7 +154,7 @@ public class AppointmentsController implements Initializable {
     }
 
     /** Discussion of lambda.
-     * Uses lambda expression to reduce lines of code when filtering appointments by week.
+     * Uses lambda expression to reduce lines of code when setting predicate for filtering appointments by week.
      * */
     @FXML
     void onWeekSelected() {
