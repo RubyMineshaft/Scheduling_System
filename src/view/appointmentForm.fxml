@@ -94,7 +94,7 @@
                   <TextField fx:id="locationTxt" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <ComboBox fx:id="contactComboBox" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <TextField fx:id="typeTxt" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <DatePicker fx:id="startDatePicker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <DatePicker fx:id="startDatePicker" onAction="#onDateSelected" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>

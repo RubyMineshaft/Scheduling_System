@@ -21,6 +21,7 @@ import java.net.URL;
 import java.time.*;
 import java.util.*;
 
+
 public class AppointmentFormController implements Initializable {
 //todo: set end date when start date is selected
     @FXML
@@ -74,6 +75,11 @@ public class AppointmentFormController implements Initializable {
         if (result.get() == ButtonType.OK) {
             showAppointments(event);
         }
+    }
+
+    @FXML
+    void onDateSelected() {
+        endDatePicker.setValue(startDatePicker.getValue());
     }
 
     @FXML
