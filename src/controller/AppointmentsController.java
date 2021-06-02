@@ -133,14 +133,18 @@ public class AppointmentsController implements Initializable {
         }
     }
 
-    /** Uses lambda expression to clear filter and show all appointments in one line of code. */
+    /** Discussion of lambda.
+     * Uses lambda expression to clear filter and show all appointments in one line of code.
+     * */
     @FXML
     void onAllSelected() {
         appointmentFilteredList.setPredicate(p -> true);
         appointmentTableView.setItems(appointmentFilteredList);
     }
 
-    /** Uses lambda expression to reduce lines of code when filtering by upcoming month. */
+    /** Discussion of lambda.
+     * Uses lambda expression to reduce lines of code when filtering by upcoming month.
+     * */
     @FXML
     void onMonthSelected() {
         LocalDateTime oneMonth = LocalDateTime.now().plusMonths(1);
@@ -149,7 +153,9 @@ public class AppointmentsController implements Initializable {
         appointmentTableView.setItems(appointmentFilteredList);
     }
 
-    /** Uses lambda expression to reduce lines of code when filtering appointments by week. */
+    /** Discussion of lambda.
+     * Uses lambda expression to reduce lines of code when filtering appointments by week.
+     * */
     @FXML
     void onWeekSelected() {
         LocalDateTime oneWeek = LocalDateTime.now().plusWeeks(1);
