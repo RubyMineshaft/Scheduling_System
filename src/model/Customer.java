@@ -99,6 +99,13 @@ public class Customer {
         return divisionId;
     }
 
+    /** Getter for division name.
+     * @return the division name
+     */
+    public String getDivision() {
+        return division;
+    }
+
     /** Overridden toString method for displaying customer information in combo boxes.
      * @return custom string describing the customer
      */

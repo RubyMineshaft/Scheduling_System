@@ -83,6 +83,20 @@ public class Appointment {
         return end;
     }
 
+    /** Getter for contact name.
+     * @return the contact's name
+     */
+    public String getContactName() {
+        return contactName;
+    }
+
+    /** Getter for customer name.
+     * @return the customer's name
+     */
+    public String getCustomerName() {
+        return customerName;
+    }
+
     /** Constructor for Appointment objects with contact names and customer names.
      * @param id the appointment id
      * @param customerID the customer id
