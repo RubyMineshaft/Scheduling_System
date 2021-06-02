@@ -2,15 +2,19 @@ package model;
 
 import DBAccess.DBUsers;
 
+/** Model for User objects. */
 public class User {
 
-    /**
-     * Keeps track of which user is logged in.
-     */
+    /** Keeps track of which user is logged in. */
     private static User currentUser;
 
+    /** The User ID. */
     private int id;
+
+    /** The username. */
     private String username;
+
+    /** The user's password. */
     private String password;
 
     /** Constructor for the User class.
@@ -38,6 +42,11 @@ public class User {
         currentUser = user;
     }
 
+    /** Authenticates the user based on provided username and password.
+     * @param username provided username
+     * @param password provided password
+     * @return true if username and password are correct
+     */
     public static boolean authenticate(String username, String password){
         User user = DBUsers.getUser(username);
         if (user != null && user.getPassword().equals(password)) {
@@ -49,27 +58,32 @@ public class User {
         return false;
     }
 
+    /** Getter for user ID.
+     * @return the user ID
+     */
     public int getId() {
         return id;
     }
 
+    /** Setter for user ID.
+     * @param id the user ID
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /** Getter for username.
+     * @return the username
+     */
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
+    /** Getter for user's password.
+     * @return the user's password
+     */
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

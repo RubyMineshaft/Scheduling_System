@@ -12,8 +12,12 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/** Handles database queries for appointment objects. */
 public class DBAppointments {
 
+    /** Gets all appointments from the database.
+     * @return observable list of all appointments
+     */
     public static ObservableList<Appointment> getAllAppointments() {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
@@ -48,6 +52,9 @@ public class DBAppointments {
         return appointments;
     }
 
+    /** Deletes a specific appointment from the database.
+     * @param id the id of the appointment to delete
+     */
     public static void deleteAppointment(int id) {
         try {
             String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
@@ -61,6 +68,9 @@ public class DBAppointments {
         }
     }
 
+    /** Deletes all appointments for a specified customer.
+     * @param customerID the customer id to delete appointments for
+     */
     public static void deleteAppointmentsForCustomer(int customerID) {
         try {
             String sql = "DELETE FROM appointments WHERE Customer_ID = ?";
@@ -74,6 +84,10 @@ public class DBAppointments {
         }
     }
 
+    /** Gets upcoming appointments for a specific user.
+     * @param userID the user id
+     * @return list of upcoming appointments
+     */
     public static ObservableList<Appointment> getUpcomingAppointmentsForUser(int userID) {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
         String sql = "SELECT a.*, c.Contact_Name, x.Customer_Name FROM appointments a JOIN contacts c ON a.Contact_ID = c.Contact_ID JOIN customers x ON a.Customer_ID = x.Customer_ID WHERE User_ID = ? AND Start > ? AND Start < ?";
@@ -112,6 +126,16 @@ public class DBAppointments {
         return appointments;
     }
 
+    /** Inserts a new appointment into the database.
+     * @param title the appointment title
+     * @param description the appointment description
+     * @param location the appointment location
+     * @param type the appointment type
+     * @param start the start date and time
+     * @param end the end date and time
+     * @param customerID the customer id
+     * @param contactID the contact id
+     */
     public static void createAppointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int contactID) {
         String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Created_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {
@@ -133,6 +157,18 @@ public class DBAppointments {
         }
     }
 
+    /** Updates an appointment in the database.
+     * @param id the id of the appointment to update
+     * @param title the appointment title
+     * @param description the appointment description
+     * @param location the appointment location
+     * @param type the appointment type
+     * @param start the appointment start date and time
+     * @param end the appointment end date and time
+     * @param customerID the customer ID
+     * @param contactID the contact ID
+     * @param userID the user ID
+     */
     public static void updateAppointment(int id, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int contactID, int userID) {
         String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ?, Last_Updated_By = ? WHERE Appointment_ID = ?";
 
@@ -157,6 +193,10 @@ public class DBAppointments {
         }
     }
 
+    /** Gets appointments for a specific customer.
+     * @param customerID the customer ID
+     * @return List of appointments
+     */
     public static ObservableList<Appointment> getAppointmentsForCustomer(int customerID) {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
         String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
@@ -188,6 +228,10 @@ public class DBAppointments {
         return appointments;
     }
 
+    /** Queries database for the number of appointments of each type for each month.
+     * @return result set from query
+     * @throws SQLException
+     */
     public static ResultSet getTypePerMonth() throws SQLException {
         String sql = "SELECT MONTH(Start) AS MonthNum, MONTHNAME(Start) AS Month, Type, COUNT(*) AS Num FROM appointments GROUP BY MonthNum, Month, Type ORDER BY MonthNum ASC";
 
@@ -197,6 +241,10 @@ public class DBAppointments {
         return rs;
     }
 
+    /** Gets the appointments for a specific contact.
+     * @param contactID the contact ID
+     * @return List of appointments for contact
+     */
     public static ObservableList<Appointment> getAppointmentsForContact(int contactID) {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 

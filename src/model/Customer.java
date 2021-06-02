@@ -1,15 +1,38 @@
 package model;
 
+/** Model for Customer objects. */
 public class Customer {
 
+    /** Customer ID. */
     private int id;
+
+    /** Customer name. */
     private String name;
+
+    /** Customer's address. */
     private String address;
+
+    /** Customer's postal code. */
     private String postalCode;
+
+    /** Customer's phone number. */
     private String phone;
+
+    /** Customer's division ID. */
     private int divisionId;
+
+    /** Customer's division name. */
     private String division;
 
+    /** Constructor for Customer objects.
+     * @param id the customer ID
+     * @param name the customer's name
+     * @param address the customer's address
+     * @param postalCode the customer's postal code
+     * @param phone the customer's phone number
+     * @param divisionId the customer's division ID
+     * @param division the name of the customer's division
+     */
     public Customer(int id, String name, String address, String postalCode, String phone, int divisionId, String division) {
         this.id = id;
         this.name = name;
@@ -20,62 +43,65 @@ public class Customer {
         this.division = division;
     }
 
+    /** Getter for customer ID.
+     * @return the customer ID
+     */
     public int getId() {
         return id;
     }
 
+    /** Setter for customer ID.
+     * @param id the customer ID
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /** Getter for customer name.
+     * @return the customer's name
+     */
     public String getName() {
         return name;
     }
 
+    /** Setter for customer name.
+     * @param name the customer's name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /** Getter for customer address.
+     * @return the customer's address
+     */
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
+    /** Getter for customer postal code.
+     * @return the customer's postal code
+     */
     public String getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
+    /** Getter for the customer's phone number.
+     * @return the customer's phone number
+     */
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
+    /** Getter for the customer's division ID.
+     * @return the division ID
+     */
     public int getDivisionId() {
         return divisionId;
     }
 
-    public void setDivisionId(int divisionId) {
-        this.divisionId = divisionId;
-    }
-
-    public String getDivision() {
-        return division;
-    }
-
-    public void setDivision(String division) {
-        this.division = division;
-    }
-
+    /** Overridden toString method for displaying customer information in combo boxes.
+     * @return custom string describing the customer
+     */
     @Override
     public String toString(){
         return id + ": " + name;

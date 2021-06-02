@@ -22,47 +22,72 @@ import java.time.*;
 import java.util.*;
 
 
+/**
+ * Controller for the add/edit appointment form.
+ */
 public class AppointmentFormController implements Initializable {
-//todo: set end date when start date is selected
+    /**
+     * The save button.
+     */
     @FXML
     private Button saveBtn;
 
+    /**
+     * The label for the title of the form.
+     * Will be set to 'Add Appointment' or 'Edit Appointment' depending on the context.
+     */
     @FXML
     private Label titleLbl;
 
+    /** Appointment ID field. */
     @FXML
     private TextField idTxt;
 
+    /** Title field. */
     @FXML
     private TextField titleTxt;
 
+    /** Description field. */
     @FXML
     private TextField descTxt;
 
+    /** Location field. */
     @FXML
     private TextField locationTxt;
 
+    /** Contact combo box. */
     @FXML
     private ComboBox<Contact> contactComboBox;
 
+    /** Type field. */
     @FXML
     private TextField typeTxt;
 
+    /** Date picker for the start date. */
     @FXML
     private DatePicker startDatePicker;
 
+    /** Combo box for selecting start time. */
     @FXML
     private ComboBox<LocalTime> startTime;
 
+    /** Date picker for the end date. */
     @FXML
     private DatePicker endDatePicker;
 
+    /** Combo box for selecting the end time. */
     @FXML
     private ComboBox<LocalTime> endTime;
 
+    /** Combo box for selecting the customer. */
     @FXML
     private ComboBox<Customer> customerComboBox;
 
+    /** Event handler for the cancel button.
+     * Gets confirmation from user and returns to the appointments view.
+     * @param event the button fire event.
+     * @throws IOException
+     */
     @FXML
     void onCancel(ActionEvent event) throws IOException {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
@@ -77,15 +102,21 @@ public class AppointmentFormController implements Initializable {
         }
     }
 
+    /**
+     * Automatically sets end date when start date is chosen.
+     */
     @FXML
     void onDateSelected() {
         endDatePicker.setValue(startDatePicker.getValue());
     }
 
+    /** Event handler for the save button.
+     * Validates form fields and saves appointment.
+     * @param event the button fire event.
+     * @throws IOException
+     */
     @FXML
     void onSave(ActionEvent event) throws IOException {
-        //TODO: Make form fields required
-
         String title = titleTxt.getText();
         String description = descTxt.getText();
         String location = locationTxt.getText();
@@ -112,11 +143,20 @@ public class AppointmentFormController implements Initializable {
         }
     }
 
+    /** Checks to see if any passed arguments have a null value.
+     * @param args the fields to check.
+     * @return true if null values are found.
+     */
     private boolean hasNull(Object... args){
         List<Object> test = new ArrayList<Object>(Arrays.asList(args));
         return test.contains(null);
     }
 
+    /** Checks whether the start time is before the end time.
+     * @param start The appointment start
+     * @param end the appointment end
+     * @return true if start is before end
+     */
     private boolean startIsBeforeEnd(LocalDateTime start, LocalDateTime end) {
         if (end.isBefore(start)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -130,6 +170,10 @@ public class AppointmentFormController implements Initializable {
         return true;
     }
 
+    /** Sets up the form for editing an appointment.
+     * Sets form title text, populates fields, and changes the event handler for the save button.
+     * @param appointment the appointment to edit
+     */
     public void editAppointment(Appointment appointment) {
         titleLbl.setText("Edit Appointment");
         idTxt.setText(String.valueOf(appointment.getId()));
@@ -154,6 +198,12 @@ public class AppointmentFormController implements Initializable {
         });
     }
 
+    /** Event handler for the update appointment button.
+     * Validates input fields and updates appointment in the database.
+     * @param event the button fire event
+     * @param userID the ID of the assigned user
+     * @throws IOException
+     */
     private void updateAppointment(ActionEvent event, int userID) throws IOException {
         int id = Integer.parseInt(idTxt.getText());
         String title = titleTxt.getText();
@@ -172,6 +222,10 @@ public class AppointmentFormController implements Initializable {
         }
     }
 
+    /** Loads the appointments view.
+     * @param event the event from the button clicked.
+     * @throws IOException
+     */
     private void showAppointments(ActionEvent event) throws IOException {
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         Parent scene = FXMLLoader.load(getClass().getResource("/view/appointments.fxml"));
@@ -179,7 +233,15 @@ public class AppointmentFormController implements Initializable {
         stage.centerOnScreen();
         stage.show();
     }
-    
+
+    /** Checks if customer has conflicting appointments.
+     * Generates an alert if a conflicting appointment is found.
+     * @param customerID The id of the customer
+     * @param start The appointment start time
+     * @param end the appointment end time
+     * @param appointmentID the appointment ID
+     * @return true if no conflicting appointments found.
+     */
     private boolean hasNoConflictingAppointment(int customerID, LocalDateTime start, LocalDateTime end, int appointmentID){
         ObservableList<Appointment> appointments = DBAppointments.getAppointmentsForCustomer(customerID);
 
@@ -205,6 +267,11 @@ public class AppointmentFormController implements Initializable {
         return true;
     }
 
+    /** Checks whether the appointment is within business hours of 8am to 10pm EST.
+     * @param start appointment start time
+     * @param end appointment end time
+     * @return true if appointment is within business hours
+     */
     private boolean isWithinBusinessHours(LocalDateTime start, LocalDateTime end) {
         ZoneId est = ZoneId.of("America/New_York");
         ZonedDateTime estStart = ZonedDateTime.of(2021,1,1,8,0,0,0,est);
@@ -242,6 +309,9 @@ public class AppointmentFormController implements Initializable {
         return true;
     }
 
+    /**
+     * Sets time choices for the time combo boxes.
+     */
     private void populateTimes(){
         LocalTime start = LocalTime.of(5,0);
         LocalTime end = LocalTime.of(23,0,1);
@@ -253,6 +323,7 @@ public class AppointmentFormController implements Initializable {
         }
     }
 
+    /** Sets customer and contact combo boxes and populates time choices. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customerComboBox.setItems(DBCustomers.getAllCustomers());

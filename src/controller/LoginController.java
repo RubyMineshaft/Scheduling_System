@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.User;
@@ -24,25 +23,39 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/** Controller for the login form. */
 public class LoginController implements Initializable {
 
+    /** The stage. */
     Stage stage;
+
+    /** The scene. */
     Parent scene;
 
+    /** Labels used for setting text based on system language. */
     @FXML
     private Label loginLbl, userIDLbl, passwordLbl, errorLbl, zoneLbl, zoneIDLbl;
 
+    /** The password field. */
     @FXML
     private PasswordField passwordField;
 
+    /** The user ID field. */
     @FXML
     private TextField userIDField;
 
+    /** The submit button. */
     @FXML
     private Button submitBtn;
 
+    /** The resource bundle for the system default language. */
     private ResourceBundle rb = ResourceBundle.getBundle("Resources/Login", Locale.getDefault());
 
+    /** Event handler for the submit button.
+     * Authenticates user and writes login attempts to login_activity.txt.
+     * @param event the button click event
+     * @throws IOException
+     */
     @FXML
     void onSubmit(ActionEvent event) throws IOException {
 
@@ -67,6 +80,10 @@ public class LoginController implements Initializable {
         log.close();
     }
 
+    /** Loads the appointments view.
+     * @param event the button click event
+     * @throws IOException
+     */
     private void showAppointments(ActionEvent event) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/appointments.fxml"));
@@ -75,6 +92,7 @@ public class LoginController implements Initializable {
         stage.show();
     }
 
+    /** Checks for appointments starting within 15 minutes and alerts the user if one is found. */
     private void checkUpcomingAppointments() {
         ObservableList<Appointment> appointments = DBAppointments.getUpcomingAppointmentsForUser(User.getCurrentUser().getId());
         if (appointments.size() > 0) {
@@ -88,11 +106,13 @@ public class LoginController implements Initializable {
         }
     }
 
-        @FXML
-    void clearError(KeyEvent event) {
+    /** Clears the error text. */
+    @FXML
+    void clearError() {
         errorLbl.setText("");
     }
 
+    /** Sets the UI text from the resource bundle and displays the zoneID. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         errorLbl.setText("");

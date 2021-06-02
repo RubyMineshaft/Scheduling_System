@@ -9,12 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * This class perfoms SQL queries on the Countries table.
- */
+/** Performs SQL queries on the Countries table. */
 public class DBCountries {
 
-    /** This method returns all countries from the database.
+    /** Gets all countries from the database.
      * @return ObservableList of countries.
      */
     public static ObservableList<Country> getAllCountries(){
@@ -41,6 +39,10 @@ public class DBCountries {
         return countryList;
     }
 
+    /** Gets a specific country from the database.
+     * @param id the country ID
+     * @return the specified country
+     */
     public static Country getCountry(int id) {
         Country country = null;
 

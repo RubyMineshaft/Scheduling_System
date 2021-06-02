@@ -10,9 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * This class performs SQL queries on the customers table
- */
+/** This class performs SQL queries on the customers table. */
 public class DBCustomers {
 
     /** Gets all customers from the database.
@@ -45,6 +43,10 @@ public class DBCustomers {
         return customerList;
     }
 
+    /** Gets a specific customer from the database.
+     * @param id the customer ID
+     * @return the specified customer
+     */
     public static Customer getCustomer(int id) {
         Customer customer = null;
         String sql = "SELECT * FROM customers c JOIN first_level_divisions d ON c.Division_ID = d.Division_ID WHERE Customer_ID = ?";
@@ -72,6 +74,13 @@ public class DBCustomers {
         return customer;
     }
 
+    /** Inserts a customer into the database.
+     * @param name the customer name
+     * @param address the customer address
+     * @param postalCode the postal code
+     * @param phone the customer's phone number
+     * @param divisionID the customer's division ID
+     */
     public static void createCustomer(String name, String address, String postalCode, String phone, int divisionID) {
         try{
            String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID, Created_By) VALUES (?,?,?,?,?,?)";
@@ -90,6 +99,9 @@ public class DBCustomers {
         }
     }
 
+    /** Deletes a customer from the database.
+     * @param customerID the id of the customer to delete
+     */
     public static void deleteCustomer(int customerID){
         try {
             String sql = "DELETE FROM customers WHERE Customer_ID = ?";
@@ -103,6 +115,11 @@ public class DBCustomers {
         }
     }
 
+    /** Gets the number of customers per division for a specific country.
+     * @param countryID the country ID
+     * @return the results of the query
+     * @throws SQLException
+     */
     public static ResultSet getCustomerPerDivisionForCountry(int countryID) throws SQLException {
         String sql = "SELECT d.Division AS Division, c.Customer_Name AS Customer, COUNT(*) AS Num FROM first_level_divisions d JOIN customers c ON c.Division_ID = d.Division_ID WHERE Country_ID = ? GROUP BY Division, Customer";
 
@@ -112,6 +129,14 @@ public class DBCustomers {
         return ps.executeQuery();
     }
 
+    /** Updates a customer in the database.
+     * @param id the customer ID
+     * @param name the customer name
+     * @param address the customer's address
+     * @param postalCode the customer's postal code
+     * @param phone the customer's phone number
+     * @param divisionID the division ID
+     */
     public static void updateCustomer(int id, String name, String address, String postalCode, String phone, int divisionID) {
         try {
             String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Division_ID = ?, Phone = ?, Last_Updated_By = ? WHERE Customer_ID = ?";

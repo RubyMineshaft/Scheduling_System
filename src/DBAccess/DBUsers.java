@@ -5,10 +5,14 @@ import util.DBConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
+/** Handles database queries for User objects. */
 public class DBUsers {
 
+    /** Gets a user from the database.
+     * @param username the username
+     * @return the specified user
+     */
     public static User getUser(String username) {
         try {
             String sql = "SELECT * FROM users WHERE User_Name = ?";

@@ -44,6 +44,10 @@ public class DBFirstLevelDivisions {
         return divisionList;
     }
 
+    /** Gets a specific division from the database.
+     * @param id the division ID
+     * @return the specified division
+     */
     public static FirstLevelDivision getDivision(int id) {
         FirstLevelDivision division = null;
 

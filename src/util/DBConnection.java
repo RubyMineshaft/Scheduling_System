@@ -9,22 +9,27 @@ import java.sql.SQLException;
  */
 public class DBConnection {
 
-    //Connection settings
+    /** Protocol */
     private static final String protocol = "jdbc";
+    /** Vendor */
     private static final String vendorName = ":mysql:";
+    /** DB IP Address */
     private static final String ipAddress = "//wgudb.ucertify.com:3306/";
+    /** Database Name */
     private static final String dbName = "WJ06RWU";
 
-    //Build the connection string
+    /** Builds the connection string. */
     private static final String jdbcURL = protocol + vendorName + ipAddress + dbName;
 
-    //Driver: mysql-connector-java-8.0.22
+    /** Driver: mysql-connector-java-8.0.22 */
     private static final String mySQLJDBCDriver = "com.mysql.cj.jdbc.Driver";
 
-    //Username and password
+    /** Username */
     private static final String username = "U06RWU";
+    /** Password is retrieved from the git ignored DBPassword class. */
     private static String password = DBPassword.getPassword();
 
+    /** Holds the database connection. */
     private static Connection conn = null;
 
     /** Storts the database connection.

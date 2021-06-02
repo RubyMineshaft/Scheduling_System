@@ -27,11 +27,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/** Controller for the reports view. */
 public class ReportsController implements Initializable {
 
+    /** Containers for the reports. */
     @FXML
     private VBox typeBox, contactScheduleBox, divisionBox;
 
+    /** Event handler for the close button.
+     * Loads the appointments view.
+     * @param event the button click event
+     * @throws IOException
+     */
     @FXML
     void onClose(ActionEvent event) throws IOException {
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
@@ -41,6 +48,9 @@ public class ReportsController implements Initializable {
         stage.show();
     }
 
+    /** Generates a report showing the number of each type of appointment per month.
+     * @throws SQLException
+     */
     private void generateTypeReport() throws SQLException {
         ResultSet rs = DBAppointments.getTypePerMonth();
 
@@ -52,6 +62,7 @@ public class ReportsController implements Initializable {
 
     }
 
+    /** Generates a report showing the schedules for each contact in the database. */
     private void generateContactSchedules() {
         ObservableList<Contact> contacts = DBContacts.getAllContacts();
 
@@ -71,6 +82,9 @@ public class ReportsController implements Initializable {
         }
     }
 
+    /** Generates a report showing the number of customers in each first level division.
+     * @throws SQLException
+     */
     private void generateDivisionCustomers() throws SQLException {
         ObservableList<Country> countries = DBCountries.getAllCountries();
 
@@ -92,6 +106,7 @@ public class ReportsController implements Initializable {
     }
 
 
+    /** Generates the reports when the view is loaded. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

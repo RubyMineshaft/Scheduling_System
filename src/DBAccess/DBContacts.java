@@ -3,15 +3,18 @@ package DBAccess;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Contact;
-import model.Country;
 import util.DBConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/** Handles database queries for contact objects. */
 public class DBContacts {
 
+    /** Gets all contacts from the database.
+     * @return List of all contacts
+     */
     public static ObservableList<Contact> getAllContacts(){
         ObservableList<Contact> contactList = FXCollections.observableArrayList();
 
@@ -37,6 +40,10 @@ public class DBContacts {
         return contactList;
     }
 
+    /** Gets a specific contact from the database.
+     * @param id the contact ID
+     * @return the specified contact
+     */
     public static Contact getContact(int id) {
         Contact contact = null;
         String sql = "SELECT * FROM contacts WHERE Contact_ID = ?";
