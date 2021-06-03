@@ -3,17 +3,19 @@
 
 ## Information
 
-Title: Scheduling System
-Purpose: Provides a GUI that allows organization users to manage customers and appointments.
+**Title:** Scheduling System  
+**Purpose:** Provides a GUI that allows organization users to manage customers and appointments.  
 
-Author: Matthew Etress
-Contact: metres1@wgu.edu
-Application Version: 1.0.0
-Date: 2021-06-02
 
-IDE: IntelliJ IDEA 2020.3.3 (Community Edition)
-JDK: Java 11.0.10
-JavaFX Version: JavaFX-SDK-16
+**Author:** Matthew Etress  
+**Contact:** metres1@wgu.edu  
+**Application Version:** 1.0.0  
+**Date:** 2021-06-02  
+
+
+**IDE:** IntelliJ IDEA 2020.3.3 (Community Edition)  
+**JDK:** Java 11.0.10  
+**JavaFX Version:** JavaFX-SDK-16  
 
 
 ## Usage
